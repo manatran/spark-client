@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import SuggestionCard from "./SuggestionCard";
+import data from "./../data";
 
 export default class Suggestions extends React.Component {
   constructor(props) {
@@ -10,10 +11,14 @@ export default class Suggestions extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <SuggestionCard />
-        <SuggestionCard />
-        <SuggestionCard />
-        <SuggestionCard />
+        {data.map(item => (
+          <SuggestionCard
+            key={item.title}
+            icon={item.icon}
+            title={item.title}
+            subtitle={item.subtitle}
+          />
+        ))}
       </View>
     );
   }
@@ -21,8 +26,8 @@ export default class Suggestions extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FBFBFB',
-    paddingTop: 32,
+    backgroundColor: "#FBFBFB",
+    paddingTop: 24,
     position: "relative",
     top: -24,
     borderRadius: 8

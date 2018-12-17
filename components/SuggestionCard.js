@@ -7,22 +7,38 @@ export default class SuggestionCard extends React.Component {
     super(props);
   }
 
+  onPress() {
+    console.log(this.props.title);
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Icon icon="gps_fixed" style={styles.icon} />
-        <View>
-          <Text style={styles.title}>Hello</Text>
-          <Text style={styles.subtitle}>Hello</Text>
+      <TouchableOpacity onPress={this.onPress.bind(this)}>
+        <View style={styles.container}>
+          <Icon icon={this.props.icon} style={styles.icon} />
+          <View style={{ flex: 1 }}>
+            {/* Title */}
+            {this.props.title ? (
+              <Text style={styles.title}>{this.props.title}</Text>
+            ) : null}
+            {/* Subtitle */}
+            {this.props.subtitle ? (
+              <Text style={styles.subtitle}>{this.props.subtitle}</Text>
+            ) : null}
+          </View>
+          {this.props.button ? (
+            <Icon icon="directions" style={styles.button} />
+          ) : null}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 1,
@@ -31,7 +47,14 @@ const styles = StyleSheet.create({
   icon: {
     color: "#A1A1A1",
     marginRight: 16,
-    fontSize: 16
+    fontSize: 20
+  },
+  button: {
+    padding: 8,
+    color: "white",
+    borderRadius: 50,
+    fontSize: 18,
+    backgroundColor: "#61D0E1"
   },
   title: {
     fontWeight: "700",

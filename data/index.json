@@ -1,0 +1,21 @@
+[{
+    "icon": "gps_fixed",
+    "title": "Current location",
+    "subtitle": "lat: 51.05829, long: 3.27622"
+  },
+  {
+    "icon": "home",
+    "title": "Home",
+    "subtitle": "Oude Bruggestraat 33, 8750 Wingene"
+  },
+  {
+    "icon": "work",
+    "title": "Work",
+    "subtitle": "Industrieweg 232, 9300 Mariakerke"
+  },
+  {
+    "icon": "history",
+    "title": "In The Pocket",
+    "subtitle": "Sassevaartstraat 46/401, 9000 Gent"
+  }
+]

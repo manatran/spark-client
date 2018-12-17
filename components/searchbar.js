@@ -19,6 +19,8 @@ export default class SearchBar extends React.Component {
   }
 
   search() {
+    this.refs.search.blur();
+
     if (this.state.term) {
       console.log(this.state.term);
     }
@@ -65,9 +67,7 @@ export default class SearchBar extends React.Component {
         </View>
 
         {/* Suggestions */}
-        {this.state.focus ? 
-          <Suggestions />
-        : null}
+        {this.state.focus ? <Suggestions /> : null}
       </View>
     );
   }
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#8A8A8A",
     paddingVertical: 16,
-    flex: 1
+    flex: 1,
+    paddingLeft: 8
   },
   icon: {
     fontSize: 20,
