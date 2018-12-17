@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
+import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
 export default class SearchBar extends React.Component {
@@ -64,11 +65,9 @@ export default class SearchBar extends React.Component {
         </View>
 
         {/* Suggestions */}
-        {this.state.focus ? (
-          <View>
-            <Text>Ello chum</Text>
-          </View>
-        ) : null}
+        {this.state.focus ? 
+          <Suggestions />
+        : null}
       </View>
     );
   }
