@@ -4,8 +4,9 @@ import {
   Text,
   View,
   TextInput,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
+import Icon from "./Icon";
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -16,43 +17,58 @@ export default class SearchBar extends React.Component {
     };
   }
 
-  onSubmit(term) {
-    console.log(term);
+  search() {
+    if (this.state.term) {
+      console.log(this.state.term);
+    }
   }
 
-  // onFocus() {
-  //   this.setState({ focus: true });
-  // }
+  clear() {
+    this.setState({ term: "" });
+    this.refs.search.blur();
+  }
 
-  // onBlur() {
-  //   this.setState({ focus: false });
-  // }
+  onFocus() {
+    this.setState({ focus: true });
+  }
 
-  toggleClass() {
-    console.log("clicked");
+  onBlur() {
+    this.setState({ focus: false });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-          <View style={styles.searchIcon} />
+          {/* Search Icon */}
+          <TouchableOpacity onPress={this.search.bind(this)}>
+            <Icon icon="search" style={styles.icon} />
+          </TouchableOpacity>
+          {/* Search Input */}
           <TextInput
+            ref="search"
+            style={styles.input}
             placeholder="Search here..."
             value={this.state.term}
             onChangeText={text => this.setState({ term: text })}
-            onSubmitEditing={() => this.onSubmit(this.state.term)}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
+            onSubmitEditing={this.search.bind(this)}
+            onFocus={this.onFocus.bind(this)}
+            onBlur={this.onBlur.bind(this)}
           />
-          <View style={[styles.searchIcon, styles.voiceIcon]} />
-          <TouchableHighlight
-            onPress={this.toggleClass}
-            style={[styles.voiceButton]}
-          >
-            <View style={[styles.searchIcon, styles.voiceIcon]} />
-          </TouchableHighlight>
+          {/* Close Icon */}
+          {this.state.term ? (
+            <TouchableOpacity onPress={this.clear.bind(this)}>
+              <Icon icon="close" style={styles.icon} />
+            </TouchableOpacity>
+          ) : null}
         </View>
+
+        {/* Suggestions */}
+        {this.state.focus ? (
+          <View>
+            <Text>Ello chum</Text>
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -66,44 +82,24 @@ const styles = StyleSheet.create({
   inputContainer: {
     position: "relative",
     backgroundColor: "white",
-    paddingHorizontal: 16,
-    height: 49,
     borderRadius: 50,
     elevation: 1,
     flexDirection: "row",
     alignItems: "center"
   },
-  searchIcon: {
-    height: 16,
-    width: 16,
-    marginRight: 32,
-    backgroundColor: "#BEBEBE"
-  },
-  voiceButton: {
-    backgroundColor: "white",
-    position: "absolute",
-    right: 0,
-    height: 49,
-    width: 49,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  voiceIcon: {
-    position: "absolute",
-    right: 16,
-    marginRight: 0
-  },
-  voiceActive: {
-    backgroundColor: "#61D0E1",
-    elevation: 2,
-    left: 0
-  },
   input: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#8A8A8A",
-    fontWeight: "bold",
-    padding: 16,
+    paddingVertical: 16,
     flex: 1
+  },
+  icon: {
+    fontSize: 20,
+    color: "#A1A1A1",
+    padding: 16,
+    borderRadius: 50
+  },
+  leftButton: {
+    marginRight: 32
   }
 });

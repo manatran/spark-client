@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { MapView } from 'expo';
-import SearchBar from './components/searchbar';
+import SearchBar from './components/SearchBar';
 
 export default class App extends React.Component {
   render() {
