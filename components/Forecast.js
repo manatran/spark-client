@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { STYLES } from "./../config/";
-import { utils } from "../utils";
+import { utils, weatherImages } from "../utils";
 
 export default class Forecast extends React.Component {
   constructor(props) {
@@ -11,7 +11,8 @@ export default class Forecast extends React.Component {
       description: null,
       city: null,
       country: null,
-      date: null
+      date: null,
+      weatherImg: ''
     };
   }
 
@@ -27,6 +28,7 @@ export default class Forecast extends React.Component {
           this.setState({ description: res.weather[0].main });
           this.setState({ city: res.name });
           this.setState({ country: res.sys.country });
+          this.setState({weatherImg: res.weather[0].icon});
 
           const date = new Date();
           let today = `${utils.getDay(
@@ -52,7 +54,7 @@ export default class Forecast extends React.Component {
             <View style={styles.forecast}>
               <Image
                 style={styles.image}
-                source={require("./../assets/icons/weather/partly-cloudy.png")}
+                source={weatherImages[this.state.weatherImg]}
               />
               <View>
                 <Text style={styles.title}>

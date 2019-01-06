@@ -9,27 +9,29 @@ import Forecast from "./components/Forecast";
 import QuickAccess from "./components/QuickAccess";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialRegion: {
+        latitude: 51.0534578,
+        longitude: 3.7202534,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+      }
+    };
+  }
   render() {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-
           <StatusBar hidden={true} />
-
           <MapView
             style={styles.map}
-            initialRegion={{
-              latitude: 51.0534578,
-              longitude: 3.7202534,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
-            }}
+            initialRegion={this.state.initialRegion}
           />
-
           <SearchBar />
           <Forecast />
           <QuickAccess />
-
         </PersistGate>
       </Provider>
     );

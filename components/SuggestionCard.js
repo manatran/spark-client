@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 import Icon from "./Icon";
 
 export default class SuggestionCard extends React.Component {
@@ -13,7 +13,7 @@ export default class SuggestionCard extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.onPress.bind(this)}>
+      <TouchableHighlight onPress={this.onPress.bind(this)}>
         <View style={styles.container}>
           <Icon icon={this.props.icon} style={styles.icon} />
           <View style={{ flex: 1 }}>
@@ -30,13 +30,14 @@ export default class SuggestionCard extends React.Component {
             <Icon icon="directions" style={styles.button} />
           ) : null}
         </View>
-      </TouchableOpacity>
+      </TouchableHighlight>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: "row",
@@ -50,11 +51,13 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   button: {
-    padding: 8,
-    color: "white",
     borderRadius: 50,
-    fontSize: 18,
-    backgroundColor: "#61D0E1"
+    padding: 8,
+    // fontSize: 18,
+    // color: "white",
+    // backgroundColor: "#61D0E1",
+    fontSize: 24,
+    color: "#61D0E1",
   },
   title: {
     fontWeight: "700",
