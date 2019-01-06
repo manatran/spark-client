@@ -1,8 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 import SuggestionCard from "./SuggestionCard";
 import data from "./../data";
-import { STYLES } from "./../config/";
 
 export default class Forecast extends React.Component {
   constructor(props) {
@@ -16,7 +15,12 @@ export default class Forecast extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.card}>
-          <SuggestionCard icon={data[0].icon} title={data[0].title} button />
+          <SuggestionCard
+            icon={data[0].icon}
+            title={data[0].title}
+            button
+            roundTop
+          />
           <SuggestionCard
             icon={data[1].icon}
             title={data[1].title}
@@ -28,6 +32,7 @@ export default class Forecast extends React.Component {
             title={data[2].title}
             subtitle={data[2].subtitle}
             button
+            roundBottom
           />
         </View>
       </View>

@@ -1,7 +1,6 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
   View,
   TextInput,
   TouchableOpacity
@@ -82,14 +81,14 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: "white",
     borderRadius: 50,
-    elevation: 1,
+    elevation: 8,
     flexDirection: "row",
     alignItems: "center"
   },
   input: {
     fontSize: 16,
     color: "#8A8A8A",
-    paddingVertical: 16,
+    paddingVertical: 12,
     flex: 1,
     paddingLeft: 8
   },

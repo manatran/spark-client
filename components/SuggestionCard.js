@@ -14,7 +14,13 @@ export default class SuggestionCard extends React.Component {
   render() {
     return (
       <TouchableHighlight onPress={this.onPress.bind(this)}>
-        <View style={styles.container}>
+        <View
+          style={[
+            styles.container,
+            this.props.roundTop ? styles.roundTop : null,
+            this.props.roundBottom ? styles.roundBottom : null
+          ]}
+        >
           <Icon icon={this.props.icon} style={styles.icon} />
           <View style={{ flex: 1 }}>
             {/* Title */}
@@ -37,13 +43,21 @@ export default class SuggestionCard extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#FAFAFA",
     paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0"
+  },
+  roundTop: {
+    borderTopStartRadius: 8,
+    borderTopEndRadius: 8,
+  },
+  roundBottom: {
+    borderBottomStartRadius: 8,
+    borderBottomEndRadius: 8,
   },
   icon: {
     color: "#A1A1A1",
@@ -57,7 +71,7 @@ const styles = StyleSheet.create({
     // color: "white",
     // backgroundColor: "#61D0E1",
     fontSize: 24,
-    color: "#61D0E1",
+    color: "#61D0E1"
   },
   title: {
     fontWeight: "700",

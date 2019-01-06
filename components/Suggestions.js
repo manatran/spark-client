@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View } from "react-native";
 import SuggestionCard from "./SuggestionCard";
 import data from "./../data";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar, View } from "react-native";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
@@ -7,6 +7,7 @@ import { MapView } from "expo";
 import SearchBar from "./components/SearchBar";
 import Forecast from "./components/Forecast";
 import QuickAccess from "./components/QuickAccess";
+import Options from "./components/Options";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -25,13 +26,18 @@ export default class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <StatusBar hidden={true} />
+          
           <MapView
             style={styles.map}
             initialRegion={this.state.initialRegion}
           />
-          <SearchBar />
-          <Forecast />
-          <QuickAccess />
+          <View style={{zIndex: 1}}>
+            <SearchBar />
+            <Forecast />
+            <QuickAccess />
+          </View>
+          <Options style={{zIndex: 10}} />
+
         </PersistGate>
       </Provider>
     );

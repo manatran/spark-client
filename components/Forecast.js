@@ -12,14 +12,16 @@ export default class Forecast extends React.Component {
       city: null,
       country: null,
       date: null,
-      weatherImg: ''
+      weatherImg: ""
     };
   }
 
   componentWillMount() {
     navigator.geolocation.getCurrentPosition(position => {
       const key = `5be01da189bdced422ff739abbc71481`;
-      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${key}`;
+      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${
+        position.coords.latitude
+      }&lon=${position.coords.longitude}&appid=${key}`;
 
       fetch(url)
         .then(res => res.json())
@@ -27,8 +29,18 @@ export default class Forecast extends React.Component {
           this.setState({ temperature: res.main.temp });
           this.setState({ description: res.weather[0].main });
           this.setState({ city: res.name });
-          this.setState({ country: res.sys.country });
-          this.setState({weatherImg: res.weather[0].icon});
+          this.setState({ weatherImg: res.weather[0].icon });
+
+          // Get country name by code
+          fetch(
+            `https://restcountries.eu/rest/v2/alpha/${
+              res.sys.country
+            }?fields=name`
+          )
+            .then(res => res.json())
+            .then(res => {
+              this.setState({ country: res.name });
+            });
 
           const date = new Date();
           let today = `${utils.getDay(
@@ -37,7 +49,6 @@ export default class Forecast extends React.Component {
             date.getMonth()
           )} ${date.getFullYear()}`;
           this.setState({ date: today });
-
         })
         .catch(err => {
           console.log(err);
@@ -52,11 +63,13 @@ export default class Forecast extends React.Component {
           <View style={STYLES.card}>
             {/* Weather */}
             <View style={styles.forecast}>
+              {/* Icon */}
               <Image
                 style={styles.image}
                 source={weatherImages[this.state.weatherImg]}
               />
               <View>
+                {/* Temperature and condition */}
                 <Text style={styles.title}>
                   {utils.convertKtoC(this.state.temperature)}° C
                 </Text>
@@ -64,7 +77,7 @@ export default class Forecast extends React.Component {
               </View>
             </View>
 
-            {/* Location */}
+            {/* Location and date */}
             <View>
               <Text style={[styles.title, styles.location]}>
                 {this.state.city}, {this.state.country}
