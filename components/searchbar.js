@@ -4,7 +4,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  BackHandler,
   Keyboard
 } from "react-native";
 
@@ -67,9 +66,6 @@ export default class SearchBar extends React.Component {
             placeholder="Search here..."
             value={this.state.term}
             onChangeText={text => this.setState({ term: text })}
-            onKeyPress={e => {
-              console.log(e)
-            }}
             onSubmitEditing={this.search.bind(this)}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
