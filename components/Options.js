@@ -16,14 +16,15 @@ export default class Options extends React.Component {
   render() {
     return (
       <View style={[styles.container, this.state.open ? styles.open : null]}>
-        <View style={[styles.options,styles.roundTop]}>
+        <View style={[styles.options, styles.roundTop]}>
+          {/* Header */}
           <TouchableHighlight style={styles.roundTop} onPress={this.toggleOpen.bind(this)}>
             <View style={[styles.roundTop, styles.header]}>
               <View style={styles.drag} />
               <Text style={styles.title}>{'options'.toUpperCase()}</Text>
             </View>
           </TouchableHighlight>
-
+          {/* Body */}
           <View style={styles.body}>
             <View style={styles.card}>
               <Text>Hello world</Text>
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     width: "100%",
-    bottom: -108,
+    bottom: -170,
     paddingHorizontal: 8,
   },
   open: {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   options: {
     elevation: 1,
     backgroundColor: "#FAFAFA",
-    paddingBottom: 108,
+    paddingBottom: 64,
   },
   roundTop: {
     borderTopStartRadius: 8,

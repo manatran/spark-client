@@ -13,7 +13,12 @@ export default class SuggestionCard extends React.Component {
 
   render() {
     return (
-      <TouchableHighlight onPress={this.onPress.bind(this)}>
+      <TouchableHighlight
+        onPress={this.onPress.bind(this)}
+        style={[
+          this.props.roundTop ? styles.roundTop : null,
+          this.props.roundBottom ? styles.roundBottom : null
+        ]}>
         <View
           style={[
             styles.container,

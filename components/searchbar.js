@@ -3,8 +3,11 @@ import {
   StyleSheet,
   View,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  BackHandler,
+  Keyboard
 } from "react-native";
+
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
@@ -17,9 +20,20 @@ export default class SearchBar extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      if (this.state.focus) {
+        this.refs.search.blur();
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidHide.remove();
+  }
+
   search() {
     this.refs.search.blur();
-
     if (this.state.term) {
       console.log(this.state.term);
     }
@@ -53,6 +67,9 @@ export default class SearchBar extends React.Component {
             placeholder="Search here..."
             value={this.state.term}
             onChangeText={text => this.setState({ term: text })}
+            onKeyPress={e => {
+              console.log(e)
+            }}
             onSubmitEditing={this.search.bind(this)}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
