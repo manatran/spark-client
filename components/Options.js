@@ -1,10 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableHighlight, Slider, Switch, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TouchableHighlight, Slider, Switch, ScrollView, Animated } from "react-native";
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      duration: 300,
+      offset: 600,
+      bottom: new Animated.Value(-600),
       open: false,
       preference: false,
       center: false,
@@ -14,118 +18,147 @@ export default class Options extends React.Component {
     };
   }
 
+  openOptions() {
+    this.setState({ open: true });
+    Animated.timing(
+      this.state.bottom,
+      {
+        toValue: 0,
+        duration: this.state.duration,
+      }
+    ).start();
+  }
+
+  closeOptions() {
+    this.setState({ open: false });
+    Animated.timing(
+      this.state.bottom,
+      {
+        toValue: -this.state.offset,
+        duration: this.state.duration,
+      }
+    ).start();
+  }
+
   toggleOpen() {
-    this.setState({ open: !this.state.open });
+    if (this.state.open) {
+      this.closeOptions();
+    } else {
+      this.openOptions();
+    }
   }
 
   render() {
     return (
-      <View style={[styles.container, this.state.open ? styles.open : null]}>
-        <View style={[styles.options, styles.roundTop, this.state.open ? styles.elevated : null]}>
-          {/* Header */}
-          <TouchableHighlight style={styles.roundTop} onPress={this.toggleOpen.bind(this)}>
-            <View style={[styles.roundTop, styles.header]}>
-              <View style={styles.drag} />
-              <Text style={styles.title}>{'options'.toUpperCase()}</Text>
-            </View>
-          </TouchableHighlight>
+      <Animated.View style={[styles.container, { bottom: this.state.bottom }]}>
+        <GestureRecognizer
+          onSwipeUp={() => this.openOptions()}
+          onSwipeDown={() => this.closeOptions()}
+        >
 
-          {/* Body */}
-          <ScrollView style={styles.body}>
-            {/* Search Card */}
-            <View style={styles.card}>
-              <Text style={styles.subtitle}>Search</Text>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.text}>Parking preference</Text>
-                <Switch
-                  value={this.state.preference}
-                  onValueChange={(val) => {
-                    this.setState({ preference: val })
-                  }}
-                />
+          <View style={[styles.options, styles.roundTop, this.state.open ? styles.elevated : null]}>
+            {/* Header */}
+            <TouchableHighlight style={styles.roundTop} onPress={this.toggleOpen.bind(this)}>
+              <View style={[styles.roundTop, styles.header]}>
+                <View style={styles.drag} />
+                <Text style={styles.title}>{'options'.toUpperCase()}</Text>
               </View>
-              <View style={styles.toggleContainer}>
-                <View>
-                  <Text style={styles.text}>Avoid city center</Text>
-                  <Text style={styles.light}>Park &amp; Ride with public transportation</Text>
+            </TouchableHighlight>
+
+            {/* Body */}
+            <ScrollView style={styles.body}>
+              {/* Search Card */}
+              <View style={styles.card}>
+                <Text style={styles.subtitle}>Search</Text>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.text}>Parking preference</Text>
+                  <Switch
+                    value={this.state.preference}
+                    onValueChange={(val) => {
+                      this.setState({ preference: val })
+                    }}
+                  />
                 </View>
-                <Switch
-                  value={this.state.center}
+                <View style={styles.toggleContainer}>
+                  <View>
+                    <Text style={styles.text}>Avoid city center</Text>
+                    <Text style={styles.light}>Park &amp; Ride with public transportation</Text>
+                  </View>
+                  <Switch
+                    value={this.state.center}
+                    onValueChange={(val) => {
+                      this.setState({ center: val })
+                    }}
+                  />
+                </View>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.text}>Maximum walking distance from destination</Text>
+                  <Text style={styles.light}>{this.state.distance}m</Text>
+                </View>
+                <Slider
+                  thumbTintColor="#61D0E1"
+                  minimumTrackTintColor="#61D0E1"
+                  maximumTrackTintColor="#61D0E1"
+                  step={50}
+                  value={this.state.distance}
+                  minimumValue={0}
+                  maximumValue={1500}
                   onValueChange={(val) => {
-                    this.setState({ center: val })
+                    this.setState({ distance: val })
                   }}
                 />
               </View>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.text}>Maximum walking distance from destination</Text>
-                <Text style={styles.light}>{this.state.distance}m</Text>
-              </View>
-              <Slider
-                thumbTintColor="#61D0E1"
-                minimumTrackTintColor="#61D0E1"
-                maximumTrackTintColor="#61D0E1"
-                step={50}
-                value={this.state.distance}
-                minimumValue={0}
-                maximumValue={1500}
-                onValueChange={(val) => {
-                  this.setState({ distance: val })
-                }}
-              />
-            </View>
 
-            {/* Personal data Card */}
-            <View style={styles.card}>
-              <Text style={styles.subtitle}>Personal data</Text>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.text}>Cheeto</Text>
-                <Switch />
+              {/* Personal data Card */}
+              <View style={styles.card}>
+                <Text style={styles.subtitle}>Personal data</Text>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.text}>Cheeto</Text>
+                  <Switch />
+                </View>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.text}>Cheeto</Text>
+                  <Switch />
+                </View>
               </View>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.text}>Cheeto</Text>
-                <Switch />
-              </View>
-            </View>
 
-            {/* Homepage Card */}
-            <View style={styles.card}>
-              <Text style={styles.subtitle}>Homepage</Text>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.text}>Display weather forecast</Text>
-                <Switch
-                  value={this.state.forecast}
-                  onValueChange={(val) => {
-                    this.setState({ forecast: val })
-                  }}
-                />
+              {/* Homepage Card */}
+              <View style={styles.card}>
+                <Text style={styles.subtitle}>Homepage</Text>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.text}>Display weather forecast</Text>
+                  <Switch
+                    value={this.state.forecast}
+                    onValueChange={(val) => {
+                      this.setState({ forecast: val })
+                    }}
+                  />
+                </View>
+                <View style={styles.toggleContainer}>
+                  <Text style={styles.text}>Display quick access</Text>
+                  <Switch
+                    value={this.state.quick}
+                    onValueChange={(val) => {
+                      this.setState({ quick: val })
+                    }}
+                  />
+                </View>
               </View>
-              <View style={styles.toggleContainer}>
-                <Text style={styles.text}>Display quick access</Text>
-                <Switch
-                  value={this.state.quick}
-                  onValueChange={(val) => {
-                    this.setState({ quick: val })
-                  }}
-                />
-              </View>
-            </View>
 
-          </ScrollView>
-        </View>
-      </View>
+            </ScrollView>
+          </View>
+
+        </GestureRecognizer>
+      </Animated.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
+    position: 'absolute',
     width: "100%",
-    bottom: -600,
     paddingHorizontal: 8,
-  },
-  open: {
-    bottom: 0,
   },
   options: {
     elevation: 1,
