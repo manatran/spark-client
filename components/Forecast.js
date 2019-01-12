@@ -18,42 +18,46 @@ export default class Forecast extends React.Component {
 
   componentWillMount() {
     navigator.geolocation.getCurrentPosition(position => {
-      const key = `5be01da189bdced422ff739abbc71481`;
-      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${
-        position.coords.latitude
-      }&lon=${position.coords.longitude}&appid=${key}`;
-
-      fetch(url)
-        .then(res => res.json())
-        .then(res => {
-          this.setState({ temperature: res.main.temp });
-          this.setState({ description: res.weather[0].main });
-          this.setState({ city: res.name });
-          this.setState({ weatherImg: res.weather[0].icon });
-
-          // Get country name by code
-          fetch(
-            `https://restcountries.eu/rest/v2/alpha/${
-              res.sys.country
-            }?fields=name`
-          )
-            .then(res => res.json())
-            .then(res => {
-              this.setState({ country: res.name });
-            });
-
-          const date = new Date();
-          let today = `${utils.getDay(
-            date.getDay()
-          )}, ${date.getDate()} ${utils.getMonth(
-            date.getMonth()
-          )} ${date.getFullYear()}`;
-          this.setState({ date: today });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.fetchWeather(position);
+    }, () => {
+      this.fetchWeather();
     });
+  }
+
+  fetchWeather(position) {
+    const key = `5be01da189bdced422ff739abbc71481`;
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=Ghent,BE&appid=${key}`;
+
+    if (position) {
+      url = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${key}`;
+    }
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ temperature: res.main.temp });
+        this.setState({ description: res.weather[0].main });
+        this.setState({ city: res.name });
+        this.setState({ weatherImg: res.weather[0].icon });
+
+        // Get country name by code
+        fetch(`https://restcountries.eu/rest/v2/alpha/${res.sys.country}?fields=name`)
+          .then(res => res.json())
+          .then(res => {
+            this.setState({ country: `, ${res.name}` });
+          });
+
+        const date = new Date();
+        let today = `${utils.getDay(
+          date.getDay()
+        )}, ${date.getDate()} ${utils.getMonth(
+          date.getMonth()
+        )} ${date.getFullYear()}`;
+        this.setState({ date: today });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -80,7 +84,7 @@ export default class Forecast extends React.Component {
             {/* Location and date */}
             <View>
               <Text style={[styles.title, styles.location]}>
-                {this.state.city}, {this.state.country}
+                {this.state.city}{this.state.country}
               </Text>
               <Text style={styles.subtitle}>{this.state.date}</Text>
             </View>
