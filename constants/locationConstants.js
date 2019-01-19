@@ -1,0 +1,2 @@
+export const GET_LOCATION = 'GET_LOCATION';
+export const GET_LOCATION_ERROR = 'GET_LOCATION_ERROR';

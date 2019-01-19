@@ -8,7 +8,7 @@ export default class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      duration: 300,
+      duration: 200,
       offset: 590,
       bottom: new Animated.Value(-590),
     };

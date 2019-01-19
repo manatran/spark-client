@@ -1,1 +1,1 @@
-export * from './forecastConstants';
+export * from './locationConstants';

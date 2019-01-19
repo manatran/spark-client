@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import { StyleSheet, Text, View, Image } from "react-native";
+import { getLocation } from "./../actions/locationActions";
 import { STYLES } from "./../config/";
 import { utils, weatherImages } from "../utils";
 
-export default class Forecast extends React.Component {
+class Forecast extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,11 +19,8 @@ export default class Forecast extends React.Component {
   }
 
   componentWillMount() {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.fetchWeather(position);
-    }, () => {
-      this.fetchWeather();
-    });
+    this.props.getLocation();
+    // this.fetchWeather(this.props.location);
   }
 
   fetchWeather(position) {
@@ -94,6 +93,13 @@ export default class Forecast extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  location: state.location.location
+})
+
+export default connect(mapStateToProps, { getLocation })(Forecast);
+
 
 const styles = StyleSheet.create({
   container: {

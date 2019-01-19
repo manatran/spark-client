@@ -8,7 +8,7 @@ export default class SuggestionCard extends React.Component {
   }
 
   onPress() {
-    console.log(this.props.title);
+    console.log(this.props.value);
   }
 
   render() {
@@ -48,7 +48,7 @@ export default class SuggestionCard extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FAFAFA",
+    backgroundColor: 'white',
     paddingHorizontal: 16,
     paddingVertical: 8,
     flexDirection: "row",
@@ -63,11 +63,12 @@ const styles = StyleSheet.create({
   roundBottom: {
     borderBottomStartRadius: 8,
     borderBottomEndRadius: 8,
+    borderBottomWidth: 0,
   },
   icon: {
     color: "#A1A1A1",
     marginRight: 16,
-    fontSize: 20
+    fontSize: 20,
   },
   button: {
     borderRadius: 50,
@@ -76,16 +77,16 @@ const styles = StyleSheet.create({
     // color: "white",
     // backgroundColor: "#61D0E1",
     fontSize: 24,
-    color: "#61D0E1"
+    color: "#61D0E1",
   },
   title: {
     fontWeight: "700",
     fontSize: 16,
-    color: "#303030"
+    color: "#303030",
   },
   subtitle: {
     fontWeight: "300",
     fontSize: 14,
-    color: "#303030"
+    color: "#303030",
   }
 });

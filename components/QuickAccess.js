@@ -1,36 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import SuggestionCard from "./SuggestionCard";
 import data from "./../data";
 
-export default class Forecast extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      position: {}
-    };
-  }
+class QuickAccess extends React.Component {
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.card}>
+
+          {this.props.location ? (
+            <SuggestionCard
+              icon="gps_fixed"
+              title="Current location"
+              value={`${this.props.location.coords.latitude}, ${this.props.location.coords.longitude}`}
+              button
+              roundTop
+            />
+          ) : null}
+
           <SuggestionCard
-            icon={data[0].icon}
-            title={data[0].title}
-            button
-            roundTop
-          />
-          <SuggestionCard
+            roundTop={this.props.location ? false : true}
             icon={data[1].icon}
             title={data[1].title}
             subtitle={data[1].subtitle}
+            value={data[1].subtitle}
             button
           />
+
           <SuggestionCard
             icon={data[2].icon}
             title={data[2].title}
             subtitle={data[2].subtitle}
+            value={data[2].subtitle}
             button
             roundBottom
           />
@@ -39,6 +43,12 @@ export default class Forecast extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  location: state.location.location
+})
+
+export default connect(mapStateToProps)(QuickAccess);
 
 const styles = StyleSheet.create({
   container: {
