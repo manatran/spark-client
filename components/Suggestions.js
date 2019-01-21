@@ -47,7 +47,7 @@ export default connect(mapStateToProps)(Suggestions);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "white",
     paddingTop: 24,
     position: "relative",
     top: -24,

@@ -1,20 +1,27 @@
-import { GET_SEARCH_TERM, REMOVE_SEARCH_TERM, SEARCHING } from '../constants';
+import { GET_SEARCH_RESULTS, REMOVE_SEARCH_RESULTS, SEARCHING } from '../constants';
 
-// Get search term
-export const getSearchTerm = (term) => dispatch => {
-  dispatch({
-    type: GET_SEARCH_TERM,
-    payload: term
-  });
+// Get search results
+export const getSearchResults = (term) => dispatch => {
   dispatch({
     type: SEARCHING,
     payload: true
   });
+  setTimeout(() => {
+    dispatch({
+      type: GET_SEARCH_RESULTS,
+      payload: term
+    });
+    dispatch({
+      type: SEARCHING,
+      payload: false
+    });
+  }, 5000)
 }
 
-export const removeSearchTerm = () => dispatch => {
+// Remove search results
+export const removeSearchResults = () => dispatch => {
   dispatch({
-    type: REMOVE_SEARCH_TERM,
+    type: REMOVE_SEARCH_RESULTS,
     payload: null
   });
   dispatch({

@@ -1,21 +1,21 @@
-import { GET_SEARCH_TERM, REMOVE_SEARCH_TERM, SEARCHING } from "../constants";
+import { GET_SEARCH_RESULTS, REMOVE_SEARCH_RESULTS, SEARCHING } from "../constants";
 
 const initialState = {
-  term: null,
+  results: null,
   searching: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case GET_SEARCH_TERM:
+    case GET_SEARCH_RESULTS:
       return {
         ...state,
-        term: action.payload
+        results: action.payload
       };
-    case REMOVE_SEARCH_TERM:
+    case REMOVE_SEARCH_RESULTS:
       return {
         ...state,
-        term: action.payload
+        results: action.payload
       };
     case SEARCHING:
       return {

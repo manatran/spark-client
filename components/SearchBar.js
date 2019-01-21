@@ -8,7 +8,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { connect } from "react-redux";
-import { getSearchTerm, removeSearchTerm } from "./../actions/searchActions";
+import { getSearchResults, removeSearchResults } from "./../actions/searchActions";
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
@@ -36,12 +36,12 @@ class SearchBar extends React.Component {
   search() {
     this.refs.search.blur();
     if (this.state.input) {
-      this.props.getSearchTerm(this.state.input);
+      this.props.getSearchResults(this.state.input);
     }
   }
 
   clear() {
-    this.props.removeSearchTerm();
+    this.props.removeSearchResults();
     this.setState({ input: "" });
     this.refs.search.blur();
   }
@@ -98,11 +98,11 @@ class SearchBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  term: state.search.term,
+  results: state.search.results,
   searching: state.search.searching
 })
 
-export default connect(mapStateToProps, { getSearchTerm, removeSearchTerm })(SearchBar);
+export default connect(mapStateToProps, { getSearchResults, removeSearchResults })(SearchBar);
 
 const styles = StyleSheet.create({
   container: {

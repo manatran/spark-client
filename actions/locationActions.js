@@ -1,4 +1,4 @@
-import { GET_LOCATION, GET_LOCATION_ERROR } from '../constants';
+import { GET_LOCATION, REMOVE_LOCATION, GET_LOCATION_ERROR } from '../constants';
 
 // Get location
 export const getLocation = () => dispatch =>  {
@@ -17,4 +17,11 @@ export const getLocation = () => dispatch =>  {
       timeout: 5000,
       maximumAge: 5000
     });
+}
+
+export const removeLocation = () => dispatch => {
+  dispatch({
+    type: REMOVE_LOCATION,
+    payload: null
+  });
 }
