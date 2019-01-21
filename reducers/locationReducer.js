@@ -1,4 +1,4 @@
-import { GET_LOCATION, GET_LOCATION_ERROR } from "../constants/locationConstants";
+import { GET_LOCATION, GET_LOCATION_ERROR } from "../constants";
 
 const initialState = {
   location: null,

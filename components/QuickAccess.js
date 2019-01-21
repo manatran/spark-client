@@ -5,7 +5,6 @@ import SuggestionCard from "./SuggestionCard";
 import data from "./../data";
 
 class QuickAccess extends React.Component {
-
   render() {
     return (
       <View style={styles.container}>

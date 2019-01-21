@@ -20,7 +20,7 @@ class Forecast extends React.Component {
 
   componentWillMount() {
     this.props.getLocation();
-    // this.fetchWeather(this.props.location);
+    this.fetchWeather(this.props.location);
   }
 
   fetchWeather(position) {
@@ -47,11 +47,7 @@ class Forecast extends React.Component {
           });
 
         const date = new Date();
-        let today = `${utils.getDay(
-          date.getDay()
-        )}, ${date.getDate()} ${utils.getMonth(
-          date.getMonth()
-        )} ${date.getFullYear()}`;
+        let today = `${utils.getDay(date.getDay())}, ${date.getDate()} ${utils.getMonth(date.getMonth())} ${date.getFullYear()}`;
         this.setState({ date: today });
       })
       .catch(err => {

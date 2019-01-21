@@ -62,7 +62,7 @@ export default class OptionsBody extends React.Component {
 
         {/* Personal data Card */}
         <View style={styles.card}>
-          <Text style={styles.subtitle}>Personal data</Text>
+          <Text style={styles.subtitle}>Custom locations</Text>
           <View style={styles.toggleContainer}>
             <Text style={styles.text}>Cheeto</Text>
             <Switch />
