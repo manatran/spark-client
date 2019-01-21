@@ -16,8 +16,12 @@ class Suggestions extends React.Component {
           <SuggestionCard
             icon="gps_fixed"
             title="Current location"
-            subtitle={`lat: ${this.props.location.coords.latitude}, long: ${this.props.location.coords.longitude}`}
-            value={`${this.props.location.coords.latitude}, ${this.props.location.coords.longitude}`}
+            subtitle={`lat: ${this.props.location.coords.latitude}, long: ${
+              this.props.location.coords.longitude
+            }`}
+            value={`${this.props.location.coords.latitude}, ${
+              this.props.location.coords.longitude
+            }`}
           />
         ) : null}
 
@@ -41,7 +45,7 @@ class Suggestions extends React.Component {
 
 const mapStateToProps = state => ({
   location: state.location.location
-})
+});
 
 export default connect(mapStateToProps)(Suggestions);
 
