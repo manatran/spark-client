@@ -1,8 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView, Slider, Switch } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Slider,
+  Switch
+} from "react-native";
 
 export default class OptionsBody extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -12,12 +18,17 @@ export default class OptionsBody extends React.Component {
       distance: 350,
       forecast: true,
       quick: true
-    }
+    };
   }
 
   render() {
     return (
-      <ScrollView style={styles.body}>
+      <ScrollView
+        contentContainerStyle={styles.body}
+        automaticallyAdjustContentInsets={false}
+        contentInset={{ top: 0, bottom: 50 }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Search Card */}
         <View style={styles.card}>
           <Text style={styles.subtitle}>Search</Text>
@@ -25,25 +36,29 @@ export default class OptionsBody extends React.Component {
             <Text style={styles.text}>Parking preference</Text>
             <Switch
               value={this.state.preference}
-              onValueChange={(val) => {
-                this.setState({ preference: val })
+              onValueChange={val => {
+                this.setState({ preference: val });
               }}
             />
           </View>
           <View style={styles.toggleContainer}>
             <View>
               <Text style={styles.text}>Avoid city center</Text>
-              <Text style={styles.light}>Park &amp; Ride with public transportation</Text>
+              <Text style={styles.light}>
+                Park &amp; Ride with public transportation
+              </Text>
             </View>
             <Switch
               value={this.state.center}
-              onValueChange={(val) => {
-                this.setState({ center: val })
+              onValueChange={val => {
+                this.setState({ center: val });
               }}
             />
           </View>
           <View style={styles.toggleContainer}>
-            <Text style={styles.text}>Maximum walking distance from destination</Text>
+            <Text style={styles.text}>
+              Maximum walking distance from destination
+            </Text>
             <Text style={styles.light}>{this.state.distance}m</Text>
           </View>
           <Slider
@@ -54,8 +69,8 @@ export default class OptionsBody extends React.Component {
             value={this.state.distance}
             minimumValue={0}
             maximumValue={1500}
-            onValueChange={(val) => {
-              this.setState({ distance: val })
+            onValueChange={val => {
+              this.setState({ distance: val });
             }}
           />
         </View>
@@ -80,8 +95,8 @@ export default class OptionsBody extends React.Component {
             <Text style={styles.text}>Display weather forecast</Text>
             <Switch
               value={this.state.forecast}
-              onValueChange={(val) => {
-                this.setState({ forecast: val })
+              onValueChange={val => {
+                this.setState({ forecast: val });
               }}
             />
           </View>
@@ -89,21 +104,24 @@ export default class OptionsBody extends React.Component {
             <Text style={styles.text}>Display quick access</Text>
             <Switch
               value={this.state.quick}
-              onValueChange={(val) => {
-                this.setState({ quick: val })
+              onValueChange={val => {
+                this.setState({ quick: val });
               }}
             />
           </View>
         </View>
-
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  body: {
+    paddingBottom: 20,
+    flexGrow: 1
+  },
   subtitle: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: "#303030"
   },
   light: {
@@ -113,13 +131,13 @@ const styles = StyleSheet.create({
   card: {
     padding: 16,
     borderTopWidth: 2,
-    borderTopColor: "#EEEEEE",
+    borderTopColor: "#EEEEEE"
   },
   toggleContainer: {
     flexDirection: "row",
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 4,
+    paddingVertical: 4
   },
   text: {
     color: "#737373"

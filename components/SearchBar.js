@@ -17,16 +17,19 @@ class SearchBar extends React.Component {
     super(props);
     this.state = {
       input: "",
-      focus: false,
+      focus: false
     };
   }
 
   componentDidMount() {
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      if (this.state.focus) {
-        this.refs.search.blur();
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        if (this.state.focus) {
+          this.refs.search.blur();
+        }
       }
-    });
+    );
   }
 
   componentWillUnmount() {
@@ -58,16 +61,19 @@ class SearchBar extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-
           {this.props.searching ? (
             // Loader
-            <ActivityIndicator style={styles.icon} size="small" color="#61D0E1" />
+            <ActivityIndicator
+              style={styles.icon}
+              size="small"
+              color="#61D0E1"
+            />
           ) : (
-              // Search Icon
-              <TouchableOpacity onPress={this.search.bind(this)}>
-                <Icon icon="search" style={styles.icon} />
-              </TouchableOpacity>
-            )}
+            // Search Icon
+            <TouchableOpacity onPress={this.search.bind(this)}>
+              <Icon icon="search" style={styles.icon} />
+            </TouchableOpacity>
+          )}
 
           {/* Search Input */}
           <TextInput
@@ -87,12 +93,11 @@ class SearchBar extends React.Component {
               <Icon icon="close" style={styles.icon} />
             </TouchableOpacity>
           ) : null}
-
         </View>
 
         {/* Suggestions */}
         {this.state.focus ? <Suggestions /> : null}
-      </View >
+      </View>
     );
   }
 }
@@ -100,22 +105,29 @@ class SearchBar extends React.Component {
 const mapStateToProps = state => ({
   term: state.search.term,
   searching: state.search.searching
-})
+});
 
-export default connect(mapStateToProps, { getSearchTerm, removeSearchTerm })(SearchBar);
+export default connect(
+  mapStateToProps,
+  { getSearchTerm, removeSearchTerm }
+)(SearchBar);
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 10,
     paddingHorizontal: 16,
     marginTop: 32
   },
   inputContainer: {
+    zIndex: 10,
     position: "relative",
     backgroundColor: "white",
     borderRadius: 50,
-    elevation: 8,
+    elevation: 10,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    borderBottomColor: "#FAFAFA",
+    borderBottomWidth: 1
   },
   input: {
     fontSize: 16,
