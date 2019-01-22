@@ -47,6 +47,12 @@ class SearchBar extends React.Component {
     this.setState({ focus: false });
   }
 
+  componentDidUpdate() {
+    if (this.props.searching) {
+      this.refs.search.blur();
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -55,11 +61,11 @@ class SearchBar extends React.Component {
             // Loader
             <ActivityIndicator style={styles.icon} size="small" color="#61D0E1" />
           ) : (
-            // Search Icon
-            <TouchableOpacity onPress={this.search.bind(this)}>
-              <Icon icon="search" style={styles.icon} />
-            </TouchableOpacity>
-          )}
+              // Search Icon
+              <TouchableOpacity onPress={this.search.bind(this)}>
+                <Icon icon="search" style={styles.icon} />
+              </TouchableOpacity>
+            )}
 
           {/* Search Input */}
           <TextInput

@@ -22,7 +22,7 @@ export const getSearchResults = (term) => dispatch => {
       type: SEARCHING,
       payload: false
     });
-  }, 5000)
+  }, 2500)
 }
 
 export const setSearchInput = (term) => dispatch => {

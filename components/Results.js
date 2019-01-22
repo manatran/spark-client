@@ -5,7 +5,7 @@ import ResultCard from "./ResultCard";
 
 class Results extends React.Component {
   render() {
-    if (this.props.results) {
+    if (this.props.input && this.props.results) {
       return (
         <View style={styles.container}>
           <ResultCard
@@ -41,7 +41,8 @@ class Results extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.search.results
+  results: state.search.results,
+  input: state.search.input
 })
 
 export default connect(mapStateToProps)(Results);
