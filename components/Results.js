@@ -18,7 +18,7 @@ class Results extends React.Component {
           />
           <ResultCard
             name="Dok Noord"
-            location={{ lat: 51, long: 3 }}
+            location={{ lat: 51.56464, long: 3.44644 }}
             available="5"
             distance="150"
             rate="$ 6/h"
@@ -26,7 +26,7 @@ class Results extends React.Component {
           />
           <ResultCard
             name="Sint-Salvatorstraat"
-            location={{ lat: 51, long: 3 }}
+            location={{ lat: 51.12345, long: 3.12345 }}
             available="12"
             distance="350"
             rate="$ 12/h"

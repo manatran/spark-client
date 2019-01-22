@@ -26,7 +26,7 @@ class ResultCard extends React.Component {
                 </View>
                 <View style={styles.row}>
                   <Icon icon="directions_walk" style={styles.icon} />
-                  <Text style={styles.bold}>{this.props.distance}</Text>
+                  <Text style={styles.bold}>{this.props.distance}m</Text>
                   <Text style={styles.text}>from destination</Text>
                 </View>
               </View>

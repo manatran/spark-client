@@ -5,17 +5,29 @@ import {
   View,
   ScrollView,
   Slider,
-  Switch
+  Switch,
+  Picker
 } from "react-native";
+import { connect } from "react-redux";
 
 export default class OptionsBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      preference: false,
+      preference: "cheap",
       center: false,
       distance: 350,
+      locations: [
+        {
+          title: "Home",
+          location: "Oude Bruggestraat 33, Wingene"
+        },
+        {
+          title: "Work",
+          location: "Industrieweg 232, Mariakerke"
+        }
+      ],
       forecast: true,
       quick: true
     };
@@ -34,19 +46,21 @@ export default class OptionsBody extends React.Component {
           <Text style={styles.subtitle}>Search</Text>
           <View style={styles.toggleContainer}>
             <Text style={styles.text}>Parking preference</Text>
-            <Switch
-              value={this.state.preference}
+            <Picker
+              selectedValue={this.state.preference}
+              style={{ height: 50, width: 110 }}
               onValueChange={val => {
-                this.setState({ preference: val });
+                this.setState({ preference: val })
               }}
-            />
+            >
+              <Picker.Item label="Cheap" value="cheap" />
+              <Picker.Item label="Close" value="close" />
+            </Picker>
           </View>
           <View style={styles.toggleContainer}>
             <View>
               <Text style={styles.text}>Avoid city center</Text>
-              <Text style={styles.light}>
-                Park &amp; Ride with public transportation
-              </Text>
+              <Text style={styles.light}>Park &amp; Ride with public transportation</Text>
             </View>
             <Switch
               value={this.state.center}

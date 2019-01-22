@@ -1,4 +1,4 @@
-import { GET_SEARCH_RESULTS, REMOVE_SEARCH_RESULTS, SEARCHING } from '../constants';
+import { GET_SEARCH_RESULTS, REMOVE_SEARCH_RESULTS, SEARCHING, SEARCH_INPUT } from '../constants';
 
 // Get search results
 export const getSearchResults = (term) => dispatch => {
@@ -16,6 +16,13 @@ export const getSearchResults = (term) => dispatch => {
       payload: false
     });
   }, 5000)
+}
+
+export const setSearchInput = (term) => dispatch => {
+  dispatch({
+    type: SEARCH_INPUT,
+    payload: term
+  });
 }
 
 // Remove search results

@@ -1,14 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import { getSearchResults, setSearchInput } from "./../actions/searchActions";
 import Icon from "./Icon";
 
-export default class SuggestionCard extends React.Component {
+class SuggestionCard extends React.Component {
   constructor(props) {
     super(props);
   }
 
   onPress() {
-    console.log(this.props.value);
+    this.props.setSearchInput(this.props.value);
+    this.props.getSearchResults(this.props.value);
   }
 
   render() {
@@ -45,6 +48,13 @@ export default class SuggestionCard extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(
+  mapStateToProps,
+  { getSearchResults, setSearchInput }
+)(SuggestionCard);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity, Keyboard, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
-import { getSearchResults, removeSearchResults } from "./../actions/searchActions";
+import { getSearchResults, removeSearchResults, setSearchInput } from "./../actions/searchActions";
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
@@ -9,7 +9,6 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: "",
       focus: false
     };
   }
@@ -28,14 +27,14 @@ class SearchBar extends React.Component {
 
   search() {
     this.refs.search.blur();
-    if (this.state.input) {
-      this.props.getSearchResults(this.state.input);
+    if (this.props.input) {
+      this.props.getSearchResults(this.props.input);
     }
   }
 
   clear() {
     this.props.removeSearchResults();
-    this.setState({ input: "" });
+    this.props.setSearchInput("");
     this.refs.search.blur();
   }
 
@@ -55,26 +54,26 @@ class SearchBar extends React.Component {
             // Loader
             <ActivityIndicator style={styles.icon} size="small" color="#61D0E1" />
           ) : (
-            // Search Icon
-            <TouchableOpacity onPress={this.search.bind(this)}>
-              <Icon icon="search" style={styles.icon} />
-            </TouchableOpacity>
-          )}
+              // Search Icon
+              <TouchableOpacity onPress={this.search.bind(this)}>
+                <Icon icon="search" style={styles.icon} />
+              </TouchableOpacity>
+            )}
 
           {/* Search Input */}
           <TextInput
             ref="search"
             style={styles.input}
             placeholder="Search here..."
-            value={this.state.input}
-            onChangeText={text => this.setState({ input: text })}
+            value={this.props.input}
+            onChangeText={text => this.props.setSearchInput(text) }
             onSubmitEditing={this.search.bind(this)}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
           />
 
           {/* Close Icon */}
-          {this.state.input ? (
+          {this.props.input ? (
             <TouchableOpacity onPress={this.clear.bind(this)}>
               <Icon icon="close" style={styles.icon} />
             </TouchableOpacity>
@@ -90,12 +89,13 @@ class SearchBar extends React.Component {
 
 const mapStateToProps = state => ({
   results: state.search.results,
+  input: state.search.input,
   searching: state.search.searching
 });
 
 export default connect(
   mapStateToProps,
-  { getSearchResults, removeSearchResults }
+  { getSearchResults, removeSearchResults, setSearchInput }
 )(SearchBar);
 
 const styles = StyleSheet.create({
