@@ -56,42 +56,47 @@ class Forecast extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        {this.state.temperature ? (
-          <View style={STYLES.card}>
-            {/* Weather */}
-            <View style={styles.forecast}>
-              {/* Icon */}
-              <Image
-                style={styles.image}
-                source={weatherImages[this.state.weatherImg]}
-              />
-              <View>
-                {/* Temperature and condition */}
-                <Text style={styles.title}>
-                  {utils.convertKtoC(this.state.temperature)}° C
+    if (!this.props.results) {
+      return (
+        <View style={styles.container}>
+          {this.state.temperature ? (
+            <View style={STYLES.card}>
+              {/* Weather */}
+              <View style={styles.forecast}>
+                {/* Icon */}
+                <Image
+                  style={styles.image}
+                  source={weatherImages[this.state.weatherImg]}
+                />
+                <View>
+                  {/* Temperature and condition */}
+                  <Text style={styles.title}>
+                    {utils.convertKtoC(this.state.temperature)}° C
                 </Text>
-                <Text style={styles.subtitle}>{this.state.description}</Text>
+                  <Text style={styles.subtitle}>{this.state.description}</Text>
+                </View>
+              </View>
+
+              {/* Location and date */}
+              <View>
+                <Text style={[styles.title, styles.location]}>
+                  {this.state.city}{this.state.country}
+                </Text>
+                <Text style={styles.subtitle}>{this.state.date}</Text>
               </View>
             </View>
-
-            {/* Location and date */}
-            <View>
-              <Text style={[styles.title, styles.location]}>
-                {this.state.city}{this.state.country}
-              </Text>
-              <Text style={styles.subtitle}>{this.state.date}</Text>
-            </View>
-          </View>
-        ) : null}
-      </View>
-    );
+          ) : null}
+        </View>
+      );
+    } else {
+      return null;
+    }
   }
 }
 
 const mapStateToProps = state => ({
-  location: state.location.location
+  location: state.location.location,
+  results: state.search.results
 })
 
 export default connect(mapStateToProps, { getLocation })(Forecast);

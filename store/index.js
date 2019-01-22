@@ -7,10 +7,11 @@ import rootReducer from '../reducers';
 
 const persistConfig = {
 	key: 'root',
-	storage
+  storage,
+  blacklist: ['search']
 };
 
-const persistedReducer = persistReducer (persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(
 	persistedReducer,

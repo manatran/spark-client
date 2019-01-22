@@ -8,6 +8,7 @@ import SearchBar from "./components/SearchBar";
 import Forecast from "./components/Forecast";
 import QuickAccess from "./components/QuickAccess";
 import Options from "./components/Options";
+import Results from "./components/Results";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class App extends React.Component {
       }
     };
   }
-  
+
   render() {
     return (
       <Provider store={store}>
@@ -37,6 +38,9 @@ export default class App extends React.Component {
             <Forecast />
             <QuickAccess />
           </View>
+
+          <Results />
+
           <Options />
         </PersistGate>
       </Provider>

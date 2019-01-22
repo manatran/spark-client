@@ -6,45 +6,50 @@ import data from "./../data";
 
 class QuickAccess extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.card}>
+    if (!this.props.results) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.card}>
 
-          {this.props.location ? (
+            {this.props.location ? (
+              <SuggestionCard
+                icon="gps_fixed"
+                title="Current location"
+                value={`${this.props.location.coords.latitude}, ${this.props.location.coords.longitude}`}
+                button
+                roundTop
+              />
+            ) : null}
+
             <SuggestionCard
-              icon="gps_fixed"
-              title="Current location"
-              value={`${this.props.location.coords.latitude}, ${this.props.location.coords.longitude}`}
+              roundTop={this.props.location ? false : true}
+              icon={data[1].icon}
+              title={data[1].title}
+              subtitle={data[1].subtitle}
+              value={data[1].subtitle}
               button
-              roundTop
             />
-          ) : null}
 
-          <SuggestionCard
-            roundTop={this.props.location ? false : true}
-            icon={data[1].icon}
-            title={data[1].title}
-            subtitle={data[1].subtitle}
-            value={data[1].subtitle}
-            button
-          />
-
-          <SuggestionCard
-            icon={data[2].icon}
-            title={data[2].title}
-            subtitle={data[2].subtitle}
-            value={data[2].subtitle}
-            button
-            roundBottom
-          />
+            <SuggestionCard
+              icon={data[2].icon}
+              title={data[2].title}
+              subtitle={data[2].subtitle}
+              value={data[2].subtitle}
+              button
+              roundBottom
+            />
+          </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 
 const mapStateToProps = state => ({
-  location: state.location.location
+  location: state.location.location,
+  results: state.search.results
 })
 
 export default connect(mapStateToProps)(QuickAccess);

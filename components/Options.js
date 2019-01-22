@@ -18,7 +18,7 @@ export default class Options extends React.Component {
   openOptions() {
     this.setState({ open: true });
     Animated.timing(this.state.bottom, {
-      toValue: -300,
+      toValue: -315,
       duration: this.state.duration
     }).start();
   }
