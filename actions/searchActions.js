@@ -1,4 +1,11 @@
-import { GET_SEARCH_RESULTS, REMOVE_SEARCH_RESULTS, SEARCHING, SEARCH_INPUT } from '../constants';
+import {
+  GET_SEARCH_RESULTS,
+  REMOVE_SEARCH_RESULTS,
+  SEARCHING,
+  UPDATE_SEARCH_HISTORY,
+  CLEAR_HISTORY,
+  SEARCH_INPUT
+} from '../constants';
 
 // Get search results
 export const getSearchResults = (term) => dispatch => {
@@ -35,4 +42,18 @@ export const removeSearchResults = () => dispatch => {
     type: SEARCHING,
     payload: false
   });
+}
+
+export const updateSearchHistory = (history) => dispatch => {
+  dispatch({
+    type: UPDATE_SEARCH_HISTORY,
+    payload: history
+  })
+}
+
+export const clearHistory = () => dispatch => {
+  dispatch({
+    type: CLEAR_HISTORY,
+    payload: null
+  })
 }

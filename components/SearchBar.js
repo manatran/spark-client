@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity, Keyboard, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
-import { getSearchResults, removeSearchResults, setSearchInput } from "./../actions/searchActions";
+import { getSearchResults, removeSearchResults, updateSearchHistory, setSearchInput } from "./../actions/searchActions";
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
@@ -29,6 +29,7 @@ class SearchBar extends React.Component {
     this.refs.search.blur();
     if (this.props.input) {
       this.props.getSearchResults(this.props.input);
+      this.props.updateSearchHistory(this.props.input);
     }
   }
 
@@ -54,11 +55,11 @@ class SearchBar extends React.Component {
             // Loader
             <ActivityIndicator style={styles.icon} size="small" color="#61D0E1" />
           ) : (
-              // Search Icon
-              <TouchableOpacity onPress={this.search.bind(this)}>
-                <Icon icon="search" style={styles.icon} />
-              </TouchableOpacity>
-            )}
+            // Search Icon
+            <TouchableOpacity onPress={this.search.bind(this)}>
+              <Icon icon="search" style={styles.icon} />
+            </TouchableOpacity>
+          )}
 
           {/* Search Input */}
           <TextInput
@@ -66,7 +67,7 @@ class SearchBar extends React.Component {
             style={styles.input}
             placeholder="Search here..."
             value={this.props.input}
-            onChangeText={text => this.props.setSearchInput(text) }
+            onChangeText={text => this.props.setSearchInput(text)}
             onSubmitEditing={this.search.bind(this)}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
@@ -90,12 +91,13 @@ class SearchBar extends React.Component {
 const mapStateToProps = state => ({
   results: state.search.results,
   input: state.search.input,
+  history: state.search.history,
   searching: state.search.searching
 });
 
 export default connect(
   mapStateToProps,
-  { getSearchResults, removeSearchResults, setSearchInput }
+  { getSearchResults, removeSearchResults, setSearchInput, updateSearchHistory }
 )(SearchBar);
 
 const styles = StyleSheet.create({

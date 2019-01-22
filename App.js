@@ -28,11 +28,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <StatusBar hidden={true} />
-
-          <MapView
-            style={styles.map}
-            initialRegion={this.state.initialRegion}
-          />
+          <MapView style={styles.map} initialRegion={this.state.initialRegion} />
           <View style={{ zIndex: 1 }}>
             <SearchBar />
             <Forecast />
