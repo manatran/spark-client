@@ -1,7 +1,14 @@
-import { GET_SEARCH_RESULTS, REMOVE_SEARCH_RESULTS, SEARCHING } from "../constants";
+import {
+  GET_SEARCH_RESULTS,
+  REMOVE_SEARCH_RESULTS,
+  SEARCHING,
+  UPDATE_SEARCH_HISTORY,
+  CLEAR_HISTORY
+} from "../constants";
 
 const initialState = {
   results: null,
+  history: [],
   searching: false,
 };
 
@@ -22,6 +29,28 @@ export default function (state = initialState, action) {
         ...state,
         searching: action.payload
       };
+    case UPDATE_SEARCH_HISTORY:
+      let historyArr = state.history;
+      console.log(historyArr)
+      if (historyArr.length == 3) {
+        historyArr.shift();
+        return {
+          ...state,
+          history: historyArr.concat(action.payload)
+        }
+      } else {
+        return {
+          ...state,
+          history: [...state.history, action.payload]
+        }
+      }
+
+    case CLEAR_HISTORY:
+      return {
+        ...state,
+        history: []
+      }
+
     default:
       return state;
   }

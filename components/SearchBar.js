@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity, Keyboard, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
-import { getSearchResults, removeSearchResults } from "./../actions/searchActions";
+import { getSearchResults, removeSearchResults, updateSearchHistory } from "./../actions/searchActions";
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
@@ -30,6 +30,7 @@ class SearchBar extends React.Component {
     this.refs.search.blur();
     if (this.state.input) {
       this.props.getSearchResults(this.state.input);
+      this.props.updateSearchHistory(this.state.input);
     }
   }
 
@@ -90,12 +91,13 @@ class SearchBar extends React.Component {
 
 const mapStateToProps = state => ({
   results: state.search.results,
+  history: state.search.history,
   searching: state.search.searching
 });
 
 export default connect(
   mapStateToProps,
-  { getSearchResults, removeSearchResults }
+  { getSearchResults, removeSearchResults, updateSearchHistory }
 )(SearchBar);
 
 const styles = StyleSheet.create({
