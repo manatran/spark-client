@@ -2,36 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import ResultCard from "./ResultCard";
+import { Permissions, Location } from "expo";
 
 class Results extends React.Component {
+
   render() {
     if (this.props.input && this.props.results) {
       return (
         <View style={styles.container}>
-          <ResultCard
-            name="Sassevaartstraat"
-            location={{ lat: 51.32423, long: 3.23423 }}
-            available="3"
-            distance="250"
-            rate="$ 3/h"
-            zone="green"
-          />
-          <ResultCard
-            name="Dok Noord"
-            location={{ lat: 51.56464, long: 3.44644 }}
-            available="5"
-            distance="150"
-            rate="$ 6/h"
-            zone="yellow"
-          />
-          <ResultCard
-            name="Sint-Salvatorstraat"
-            location={{ lat: 51.12345, long: 3.12345 }}
-            available="12"
-            distance="350"
-            rate="$ 12/h"
-            zone="red"
-          />
+          {this.props.results.map(el => (
+            <ResultCard
+              key={el._id}
+              // name={this.state.name[i]}
+              location={{ latitude: el.geo_location.coordinates[1], longitude: el.geo_location.coordinates[0] }}
+              available={el.capacity}
+              distance={el.distance}
+              rate={`€ ${el.zone.rates[0].price}`}
+              zone={el.zone.name}
+            />
+          ))}
         </View>
       );
     } else {

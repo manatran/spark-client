@@ -1,13 +1,39 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableHighlight, Linking } from "react-native";
+import { Permissions, Location } from "expo";
 import Icon from "./Icon";
 import { STYLES } from "./../config/";
 
 class ResultCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: null
+    }
+  }
+
+  getAddressFromLatLong(pos) {
+    Permissions.askAsync(Permissions.LOCATION).then(location => {
+      if (location.status === "granted") {
+        console.log(location.status);
+        Location.reverseGeocodeAsync(pos).then(address => {
+          console.log(address);
+          address = address[0];
+          this.setState({ name: address.name });
+        }).catch(err => {
+          console.log(err);
+        })
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.getAddressFromLatLong(this.props.location);
+  }
 
   openMap() {
     const address = 'http://maps.google.com/maps?daddr=';
-    const url = `${address}${this.props.location.lat}+${this.props.location.long}`;
+    const url = `${address}${this.props.location.latitude}+${this.props.location.longitude}`;
     Linking.openURL(url);
   }
 
@@ -16,7 +42,7 @@ class ResultCard extends React.Component {
       <TouchableHighlight style={styles.container} onPress={this.openMap.bind(this)}>
         <View style={[STYLES.card, styles.card]}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.title}>{this.props.name}</Text>
+            <Text style={styles.title}>{this.state.name}</Text>
             <View style={[styles.row, styles.body]}>
               <View>
                 <View style={styles.row}>

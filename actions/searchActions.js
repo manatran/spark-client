@@ -6,6 +6,8 @@ import {
   CLEAR_HISTORY,
   SEARCH_INPUT
 } from '../constants';
+import { Location, Permissions } from "expo";
+import { store } from "./../store";
 
 // Get search results
 export const getSearchResults = (term) => dispatch => {
@@ -13,16 +15,63 @@ export const getSearchResults = (term) => dispatch => {
     type: SEARCHING,
     payload: true
   });
-  setTimeout(() => {
-    dispatch({
-      type: GET_SEARCH_RESULTS,
-      payload: term
-    });
-    dispatch({
-      type: SEARCHING,
-      payload: false
-    });
-  }, 2500)
+
+  Permissions.askAsync(Permissions.LOCATION).then(location => {
+    if (location.status === "granted") {
+      if (term === "Current location") {
+        const lat = store.getState().location.location.coords.latitude;
+        const long = store.getState().location.location.coords.longitude;
+        
+        fetch(`http://192.168.0.135:3000/search?lat=${lat}&lng=${long}&radius=10`)
+          .then(res => res.json())
+          .then(res => {
+            dispatch({
+              type: GET_SEARCH_RESULTS,
+              payload: res
+            });
+            dispatch({
+              type: SEARCHING,
+              payload: false
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            dispatch({
+              type: SEARCHING,
+              payload: false
+            });
+
+          })
+      } else {
+        Location.geocodeAsync(term).then(loc => {
+          loc = loc[0];
+          if (loc) {
+            fetch(`http://192.168.0.135:3000/search?lat=${loc.latitude}&lng=${loc.longitude}&radius=10`)
+              .then(res => res.json())
+              .then(res => {
+                dispatch({
+                  type: GET_SEARCH_RESULTS,
+                  payload: res
+                });
+                dispatch({
+                  type: SEARCHING,
+                  payload: false
+                });
+              })
+              .catch(err => {
+                console.log(err);
+                dispatch({
+                  type: SEARCHING,
+                  payload: false
+                });
+              })
+          } else {
+            console.log("Address not found");
+          }
+        }).catch(err => console.log(err));
+      }
+    }
+  })
 }
 
 export const setSearchInput = (term) => dispatch => {
