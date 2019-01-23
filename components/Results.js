@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import ResultCard from "./ResultCard";
-import { Permissions, Location } from "expo";
 
 class Results extends React.Component {
 
@@ -13,11 +12,10 @@ class Results extends React.Component {
           {this.props.results.map(el => (
             <ResultCard
               key={el._id}
-              // name={this.state.name[i]}
               location={{ latitude: el.geo_location.coordinates[1], longitude: el.geo_location.coordinates[0] }}
               available={el.capacity}
               distance={el.distance}
-              rate={`€ ${el.zone.rates[0].price}`}
+              rate={el.zone.rate}
               zone={el.zone.name}
             />
           ))}

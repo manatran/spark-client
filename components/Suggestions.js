@@ -23,7 +23,7 @@ class Suggestions extends React.Component {
 
         {this.props.history
           ? this.props.history.map((item, index) => {
-              return <SuggestionCard key={index} icon="history" title={item} value={item} />;
+              return <SuggestionCard key={index} customStyle={styles.history} icon="history" title={item} value={item} />;
             })
           : null}
       </View>
@@ -45,5 +45,8 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -24,
     borderRadius: 8
+  },
+  history: {
+    paddingVertical: 16
   }
 });

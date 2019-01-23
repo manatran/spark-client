@@ -60,7 +60,6 @@ class Forecast extends React.Component {
   }
 
   render() {
-    console.log(this.props.preferences.forecast);
     if (!this.props.results && this.props.preferences.forecast) {
       return (
         <View style={styles.container}>

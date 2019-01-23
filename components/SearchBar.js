@@ -28,7 +28,7 @@ class SearchBar extends React.Component {
   search() {
     this.refs.search.blur();
     if (this.props.input) {
-      this.props.getSearchResults(this.props.input);
+      this.props.getSearchResults(this.props.input, this.props.options);
       this.props.updateSearchHistory(this.props.input);
     }
   }
@@ -98,7 +98,8 @@ const mapStateToProps = state => ({
   results: state.search.results,
   input: state.search.input,
   history: state.search.history,
-  searching: state.search.searching
+  searching: state.search.searching,
+  options: state.option.options
 });
 
 export default connect(

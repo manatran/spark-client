@@ -8,18 +8,21 @@ class ResultCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: null
+      name: 'Location'
     }
   }
 
   getAddressFromLatLong(pos) {
     Permissions.askAsync(Permissions.LOCATION).then(location => {
       if (location.status === "granted") {
-        console.log(location.status);
         Location.reverseGeocodeAsync(pos).then(address => {
           console.log(address);
           address = address[0];
-          this.setState({ name: address.name });
+          if (address.street && address.city) {
+            this.setState({ name: `${address.street} ${address.city}` });
+          } else if (!parseInt(address.name)) {
+            this.setState({ name: address.name });
+          }
         }).catch(err => {
           console.log(err);
         })
@@ -59,10 +62,12 @@ class ResultCard extends React.Component {
 
             </View>
           </View>
-          <View style={[styles.row, styles.badge]}>
-            <View style={[styles.zone, styles[this.props.zone]]} />
-            <Text>{this.props.rate}</Text>
-          </View>
+          {this.props.rate ? (
+            <View style={[styles.row, styles.badge]}>
+              <View style={[styles.zone, styles[this.props.zone]]} />
+              <Text>{this.props.rate.price}</Text>
+            </View>
+          ) : null}
           <Icon icon="directions" style={styles.button} />
         </View>
       </TouchableHighlight>

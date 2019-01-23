@@ -16,7 +16,7 @@ export const getSearchResults = (term, options) => dispatch => {
     type: SEARCHING,
     payload: true
   });
-
+  console.log(options)
   Permissions.askAsync(Permissions.LOCATION).then(location => {
     if (location.status === "granted") {
       if (term === "Current location") {

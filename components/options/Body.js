@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "react-native";
 import { connect } from "react-redux";
+import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "react-native";
 import { updateOptions, updatePreferences } from "../../actions/optionActions";
+import Icon from "./../Icon";
 
 class OptionsBody extends React.Component {
   constructor(props) {
@@ -46,8 +47,6 @@ class OptionsBody extends React.Component {
   }
 
   render() {
-    console.log(this.props.displayPreferences);
-
     return (
       <ScrollView
         contentContainerStyle={styles.body}
@@ -108,12 +107,18 @@ class OptionsBody extends React.Component {
         <View style={styles.card}>
           <Text style={styles.subtitle}>Custom locations</Text>
           <View style={styles.customContainer}>
-            <Text style={styles.title}>Home</Text>
-            <Text style={styles.subtitle}>Oude Bruggestraat 33, 8750 Wingene</Text>
+            <Icon icon="home" style={styles.icon} />
+            <View>
+              <Text style={styles.locationTitle}>Home</Text>
+              <Text style={styles.text}>Oude Bruggestraat 33, 8750 Wingene</Text>
+            </View>
           </View>
           <View style={styles.customContainer}>
-            <Text style={styles.title}>Work</Text>
-            <Text style={styles.subtitle}>Industrieweg 232, 9300 Mariakerke</Text>
+            <Icon icon="work" style={styles.icon} />
+            <View>
+              <Text style={styles.locationTitle}>Work</Text>
+              <Text style={styles.text}>Industrieweg 232, 9300 Mariakerke</Text>
+            </View>
           </View>
         </View>
 
@@ -172,18 +177,24 @@ const styles = StyleSheet.create({
     color: "#737373"
   },
   customContainer: {
-    flexDirection: "column",
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 8
+  },
+  icon: {
+    fontSize: 20,
+    paddingRight: 8,
+    color: "#A1A1A1"
   },
   title: {
     fontWeight: "700",
     fontSize: 16,
     color: "#303030"
   },
-  subtitle: {
-    fontWeight: "300",
+  locationTitle: {
+    fontWeight: "700",
     fontSize: 14,
-    color: "#303030"
+    color: "#737373"
   }
 });
 

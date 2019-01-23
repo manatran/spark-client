@@ -23,6 +23,7 @@ class SuggestionCard extends React.Component {
         <View
           style={[
             styles.container,
+            this.props.customStyle,
             this.props.roundTop ? styles.roundTop : null,
             this.props.roundBottom ? styles.roundBottom : null
           ]}
