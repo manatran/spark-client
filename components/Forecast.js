@@ -28,7 +28,9 @@ class Forecast extends React.Component {
     let url = `http://api.openweathermap.org/data/2.5/weather?q=Ghent,BE&appid=${key}`;
 
     if (position) {
-      url = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${key}`;
+      url = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${
+        position.coords.longitude
+      }&appid=${key}`;
     }
 
     fetch(url)
@@ -47,7 +49,9 @@ class Forecast extends React.Component {
           });
 
         const date = new Date();
-        let today = `${utils.getDay(date.getDay())}, ${date.getDate()} ${utils.getMonth(date.getMonth())} ${date.getFullYear()}`;
+        let today = `${utils.getDay(date.getDay())}, ${date.getDate()} ${utils.getMonth(
+          date.getMonth()
+        )} ${date.getFullYear()}`;
         this.setState({ date: today });
       })
       .catch(err => {
@@ -56,7 +60,8 @@ class Forecast extends React.Component {
   }
 
   render() {
-    if (!this.props.results) {
+    console.log(this.props.preferences.forecast);
+    if (!this.props.results && this.props.preferences.forecast) {
       return (
         <View style={styles.container}>
           {this.state.temperature ? (
@@ -64,15 +69,10 @@ class Forecast extends React.Component {
               {/* Weather */}
               <View style={styles.forecast}>
                 {/* Icon */}
-                <Image
-                  style={styles.image}
-                  source={weatherImages[this.state.weatherImg]}
-                />
+                <Image style={styles.image} source={weatherImages[this.state.weatherImg]} />
                 <View>
                   {/* Temperature and condition */}
-                  <Text style={styles.title}>
-                    {utils.convertKtoC(this.state.temperature)}° C
-                </Text>
+                  <Text style={styles.title}>{utils.convertKtoC(this.state.temperature)}° C</Text>
                   <Text style={styles.subtitle}>{this.state.description}</Text>
                 </View>
               </View>
@@ -80,7 +80,8 @@ class Forecast extends React.Component {
               {/* Location and date */}
               <View>
                 <Text style={[styles.title, styles.location]}>
-                  {this.state.city}{this.state.country}
+                  {this.state.city}
+                  {this.state.country}
                 </Text>
                 <Text style={styles.subtitle}>{this.state.date}</Text>
               </View>
@@ -96,11 +97,14 @@ class Forecast extends React.Component {
 
 const mapStateToProps = state => ({
   location: state.location.location,
-  results: state.search.results
-})
+  results: state.search.results,
+  preferences: state.option.displayPreferences
+});
 
-export default connect(mapStateToProps, { getLocation })(Forecast);
-
+export default connect(
+  mapStateToProps,
+  { getLocation }
+)(Forecast);
 
 const styles = StyleSheet.create({
   container: {

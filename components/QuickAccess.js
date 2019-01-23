@@ -6,19 +6,12 @@ import data from "./../data";
 
 class QuickAccess extends React.Component {
   render() {
-    if (!this.props.results) {
+    if (!this.props.results && this.props.preferences.quick) {
       return (
         <View style={styles.container}>
           <View style={styles.card}>
-
             {this.props.location ? (
-              <SuggestionCard
-                icon="gps_fixed"
-                title="Current location"
-                value="Current location"
-                button
-                roundTop
-              />
+              <SuggestionCard icon="gps_fixed" title="Current location" value="Current location" button roundTop />
             ) : null}
 
             <SuggestionCard
@@ -49,8 +42,9 @@ class QuickAccess extends React.Component {
 
 const mapStateToProps = state => ({
   location: state.location.location,
-  results: state.search.results
-})
+  results: state.search.results,
+  preferences: state.option.displayPreferences
+});
 
 export default connect(mapStateToProps)(QuickAccess);
 

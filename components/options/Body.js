@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "react-native";
 import { connect } from "react-redux";
-import { updateOptions } from "../../actions/optionActions";
+import { updateOptions, updatePreferences } from "../../actions/optionActions";
 
 class OptionsBody extends React.Component {
   constructor(props) {
@@ -30,6 +30,13 @@ class OptionsBody extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  onPrefChange(name, pref) {
+    let preferences = Object.assign({}, this.props.displayPreferences);
+
+    preferences[name] = pref;
+    this.props.updatePreferences(preferences);
+  }
+
   onChange(name, value) {
     let optionsObj = Object.assign({}, this.state.options);
 
@@ -39,6 +46,8 @@ class OptionsBody extends React.Component {
   }
 
   render() {
+    console.log(this.props.displayPreferences);
+
     return (
       <ScrollView
         contentContainerStyle={styles.body}
@@ -98,13 +107,13 @@ class OptionsBody extends React.Component {
         {/* Personal data Card */}
         <View style={styles.card}>
           <Text style={styles.subtitle}>Custom locations</Text>
-          <View style={styles.toggleContainer}>
-            <Text style={styles.text}>Cheeto</Text>
-            <Switch />
+          <View style={styles.customContainer}>
+            <Text style={styles.title}>Home</Text>
+            <Text style={styles.subtitle}>Oude Bruggestraat 33, 8750 Wingene</Text>
           </View>
-          <View style={styles.toggleContainer}>
-            <Text style={styles.text}>Cheeto</Text>
-            <Switch />
+          <View style={styles.customContainer}>
+            <Text style={styles.title}>Work</Text>
+            <Text style={styles.subtitle}>Industrieweg 232, 9300 Mariakerke</Text>
           </View>
         </View>
 
@@ -114,18 +123,18 @@ class OptionsBody extends React.Component {
           <View style={styles.toggleContainer}>
             <Text style={styles.text}>Display weather forecast</Text>
             <Switch
-              value={this.state.forecast}
+              value={this.props.displayPreferences.forecast}
               onValueChange={value => {
-                this.setState({ forecast: value });
+                this.onPrefChange("forecast", value);
               }}
             />
           </View>
           <View style={styles.toggleContainer}>
             <Text style={styles.text}>Display quick access</Text>
             <Switch
-              value={this.state.quick}
+              value={this.props.displayPreferences.quick}
               onValueChange={value => {
-                this.setState({ quick: value });
+                this.onPrefChange("quick", value);
               }}
             />
           </View>
@@ -161,14 +170,29 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#737373"
+  },
+  customContainer: {
+    flexDirection: "column",
+    paddingVertical: 8
+  },
+  title: {
+    fontWeight: "700",
+    fontSize: 16,
+    color: "#303030"
+  },
+  subtitle: {
+    fontWeight: "300",
+    fontSize: 14,
+    color: "#303030"
   }
 });
 
 const mapStateToProps = state => ({
-  input: state.search.input
+  input: state.search.input,
+  displayPreferences: state.option.displayPreferences
 });
 
 export default connect(
   mapStateToProps,
-  { updateOptions }
+  { updateOptions, updatePreferences }
 )(OptionsBody);
