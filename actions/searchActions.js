@@ -7,8 +7,9 @@ import {
   SEARCH_INPUT
 } from '../constants';
 
+
 // Get search results
-export const getSearchResults = (term) => dispatch => {
+export const getSearchResults = (term, options) => dispatch => {
   dispatch({
     type: SEARCHING,
     payload: true

@@ -1,23 +1,18 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Slider,
-  Switch,
-  Picker
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "react-native";
 import { connect } from "react-redux";
+import { updateOptions } from "../../actions/optionActions";
 
-export default class OptionsBody extends React.Component {
+class OptionsBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
-      preference: "cheap",
-      center: false,
-      distance: 350,
+      options: {
+        preference: "cheap",
+        center: false,
+        distance: 350
+      },
       locations: [
         {
           title: "Home",
@@ -31,6 +26,16 @@ export default class OptionsBody extends React.Component {
       forecast: true,
       quick: true
     };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(name, value) {
+    let optionsObj = Object.assign({}, this.state.options);
+
+    optionsObj[name] = value;
+    this.setState({ options: optionsObj });
+    this.props.updateOptions(optionsObj, this.props.input);
   }
 
   render() {
@@ -38,7 +43,7 @@ export default class OptionsBody extends React.Component {
       <ScrollView
         contentContainerStyle={styles.body}
         automaticallyAdjustContentInsets={false}
-        contentInset={{ top: 0, bottom: 50 }}
+        contentInset={{ top: 0, bottom: 100 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Search Card */}
@@ -47,10 +52,11 @@ export default class OptionsBody extends React.Component {
           <View style={styles.toggleContainer}>
             <Text style={styles.text}>Parking preference</Text>
             <Picker
-              selectedValue={this.state.preference}
+              selectedValue={this.state.options.preference}
               style={{ height: 50, width: 110 }}
-              onValueChange={val => {
-                this.setState({ preference: val })
+              name="preference"
+              onValueChange={value => {
+                this.onChange("preference", value);
               }}
             >
               <Picker.Item label="Cheap" value="cheap" />
@@ -63,28 +69,28 @@ export default class OptionsBody extends React.Component {
               <Text style={styles.light}>Park &amp; Ride with public transportation</Text>
             </View>
             <Switch
-              value={this.state.center}
-              onValueChange={val => {
-                this.setState({ center: val });
+              name="center"
+              value={this.state.options.center}
+              onValueChange={value => {
+                this.onChange("center", value);
               }}
             />
           </View>
           <View style={styles.toggleContainer}>
-            <Text style={styles.text}>
-              Maximum walking distance from destination
-            </Text>
-            <Text style={styles.light}>{this.state.distance}m</Text>
+            <Text style={styles.text}>Maximum walking distance from destination</Text>
+            <Text style={styles.light}>{this.state.options.distance}m</Text>
           </View>
           <Slider
             thumbTintColor="#61D0E1"
             minimumTrackTintColor="#61D0E1"
             maximumTrackTintColor="#61D0E1"
             step={50}
-            value={this.state.distance}
+            name="distance"
+            value={this.state.options.distance}
             minimumValue={50}
             maximumValue={1500}
-            onValueChange={val => {
-              this.setState({ distance: val });
+            onValueChange={value => {
+              this.onChange("distance", value);
             }}
           />
         </View>
@@ -109,8 +115,8 @@ export default class OptionsBody extends React.Component {
             <Text style={styles.text}>Display weather forecast</Text>
             <Switch
               value={this.state.forecast}
-              onValueChange={val => {
-                this.setState({ forecast: val });
+              onValueChange={value => {
+                this.setState({ forecast: value });
               }}
             />
           </View>
@@ -118,8 +124,8 @@ export default class OptionsBody extends React.Component {
             <Text style={styles.text}>Display quick access</Text>
             <Switch
               value={this.state.quick}
-              onValueChange={val => {
-                this.setState({ quick: val });
+              onValueChange={value => {
+                this.setState({ quick: value });
               }}
             />
           </View>
@@ -157,3 +163,12 @@ const styles = StyleSheet.create({
     color: "#737373"
   }
 });
+
+const mapStateToProps = state => ({
+  input: state.search.input
+});
+
+export default connect(
+  mapStateToProps,
+  { updateOptions }
+)(OptionsBody);

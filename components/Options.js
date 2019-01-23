@@ -3,9 +3,11 @@ import { StyleSheet, View, TouchableHighlight, Animated } from "react-native";
 import OptionsHeader from "./options/Header";
 import OptionsBody from "./options/Body";
 import GestureRecognizer from "react-native-swipe-gestures";
+import { connect } from "react-redux";
 import { height } from "../config";
+import { updateOptions } from "../actions/optionActions";
 
-export default class Options extends React.Component {
+class Options extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,14 +45,8 @@ export default class Options extends React.Component {
     return (
       <Animated.View style={[styles.container, { bottom: this.state.bottom }]}>
         <View style={[styles.options, styles.roundTop]}>
-          <TouchableHighlight
-            style={styles.roundTop}
-            onPress={this.toggleOpen.bind(this)}
-          >
-            <GestureRecognizer
-              onSwipeUp={() => this.openOptions()}
-              onSwipeDown={() => this.closeOptions()}
-            >
+          <TouchableHighlight style={styles.roundTop} onPress={this.toggleOpen.bind(this)}>
+            <GestureRecognizer onSwipeUp={() => this.openOptions()} onSwipeDown={() => this.closeOptions()}>
               <OptionsHeader />
             </GestureRecognizer>
           </TouchableHighlight>
@@ -79,3 +75,9 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 8
   }
 });
+
+const mapStateToProps = state => ({
+  options: state.option.options
+});
+
+export default connect(mapStateToProps)(Options);
