@@ -16,33 +16,24 @@ class Suggestions extends React.Component {
           <SuggestionCard
             icon="gps_fixed"
             title="Current location"
-            subtitle={`lat: ${this.props.location.coords.latitude}, long: ${
-              this.props.location.coords.longitude
-            }`}
+            subtitle={`lat: ${this.props.location.coords.latitude}, long: ${this.props.location.coords.longitude}`}
             value="Current location"
           />
         ) : null}
 
-        <SuggestionCard
-          icon={data[1].icon}
-          title={data[1].title}
-          subtitle={data[1].subtitle}
-          value={data[1].subtitle}
-        />
-
-        <SuggestionCard
-          icon={data[2].icon}
-          title={data[2].title}
-          subtitle={data[2].subtitle}
-          value={data[2].subtitle}
-        />
+        {this.props.history
+          ? this.props.history.map((item, index) => {
+              return <SuggestionCard key={index} icon="history" title={item} value={item} />;
+            })
+          : null}
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  location: state.location.location
+  location: state.location.location,
+  history: state.search.history
 });
 
 export default connect(mapStateToProps)(Suggestions);
