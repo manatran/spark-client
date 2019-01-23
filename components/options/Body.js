@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Slider,
-  Switch,
-  Picker
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "react-native";
 import { connect } from "react-redux";
 
 export default class OptionsBody extends React.Component {
@@ -38,7 +30,7 @@ export default class OptionsBody extends React.Component {
       <ScrollView
         contentContainerStyle={styles.body}
         automaticallyAdjustContentInsets={false}
-        contentInset={{ top: 0, bottom: 50 }}
+        contentInset={{ top: 0, bottom: 100 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Search Card */}
@@ -50,7 +42,7 @@ export default class OptionsBody extends React.Component {
               selectedValue={this.state.preference}
               style={{ height: 50, width: 110 }}
               onValueChange={val => {
-                this.setState({ preference: val })
+                this.setState({ preference: val });
               }}
             >
               <Picker.Item label="Cheap" value="cheap" />
@@ -70,9 +62,7 @@ export default class OptionsBody extends React.Component {
             />
           </View>
           <View style={styles.toggleContainer}>
-            <Text style={styles.text}>
-              Maximum walking distance from destination
-            </Text>
+            <Text style={styles.text}>Maximum walking distance from destination</Text>
             <Text style={styles.light}>{this.state.distance}m</Text>
           </View>
           <Slider

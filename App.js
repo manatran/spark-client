@@ -9,9 +9,9 @@ import Forecast from "./components/Forecast";
 import QuickAccess from "./components/QuickAccess";
 import Options from "./components/Options";
 import Results from "./components/Results";
+import Autocomplete from "./components/AutoComplete";
 
 export default class App extends React.Component {
-  
   render() {
     return (
       <Provider store={store}>
@@ -19,7 +19,7 @@ export default class App extends React.Component {
           <StatusBar hidden={true} />
           <Map />
           <View style={{ zIndex: 1 }}>
-            <SearchBar />
+            <Autocomplete />
             <Forecast />
             <QuickAccess />
           </View>
