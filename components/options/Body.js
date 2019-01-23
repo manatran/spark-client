@@ -81,7 +81,7 @@ export default class OptionsBody extends React.Component {
             maximumTrackTintColor="#61D0E1"
             step={50}
             value={this.state.distance}
-            minimumValue={0}
+            minimumValue={50}
             maximumValue={1500}
             onValueChange={val => {
               this.setState({ distance: val });

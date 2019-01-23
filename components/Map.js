@@ -20,27 +20,45 @@ class Map extends React.Component {
   }
 
   getLatLongFromString(address) {
-    Location.geocodeAsync(address).then(loc => {
-      loc = loc[0];
-      const location = {
-        latitude: loc.latitude,
-        longitude: loc.longitude
-      };
+    if (address !== "Current location") {
+      Location.geocodeAsync(address).then(loc => {
+        loc = loc[0];
+        if (loc) {
+          const location = {
+            latitude: loc.latitude,
+            longitude: loc.longitude
+          };
 
-      if(this.props.results) {
-        this.setState({ searchLoc: location });
+          if (this.props.results) {
+            this.setState({ searchLoc: location });
+            this.setState({
+              region: {
+                latitude: loc.latitude,
+                longitude: loc.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421
+              }
+            });
+          }
+        }
+        this.setState({ receivedProps: false });
+      })
+        .catch(err => console.log(err));
+
+    } else {
+      if (this.props.results) {
+        this.setState({ searchLoc: this.props.location.coords });
         this.setState({
           region: {
-            latitude: loc.latitude,
-            longitude: loc.longitude,
+            latitude: this.props.location.coords.latitude,
+            longitude: this.props.location.coords.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421
           }
         });
       }
       this.setState({ receivedProps: false });
-    })
-      .catch(err => console.log(err));
+    }
   }
 
   componentWillMount() {
@@ -53,7 +71,7 @@ class Map extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.receivedProps) {
+    if (this.state.receivedProps && this.props.input) {
       this.getLatLongFromString(this.props.input);
     }
   }
@@ -78,6 +96,7 @@ class Map extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  location: state.location.location,
   input: state.search.input,
   results: state.search.results
 })

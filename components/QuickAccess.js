@@ -15,7 +15,7 @@ class QuickAccess extends React.Component {
               <SuggestionCard
                 icon="gps_fixed"
                 title="Current location"
-                value={`${this.props.location.coords.latitude}, ${this.props.location.coords.longitude}`}
+                value="Current location"
                 button
                 roundTop
               />

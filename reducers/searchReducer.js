@@ -37,7 +37,6 @@ export default function (state = initialState, action) {
       };
     case UPDATE_SEARCH_HISTORY:
       let historyArr = state.history;
-      console.log(historyArr);
       if (historyArr.length == 3) {
         historyArr.shift();
         return {

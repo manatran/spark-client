@@ -19,9 +19,7 @@ class Suggestions extends React.Component {
             subtitle={`lat: ${this.props.location.coords.latitude}, long: ${
               this.props.location.coords.longitude
             }`}
-            value={`${this.props.location.coords.latitude}, ${
-              this.props.location.coords.longitude
-            }`}
+            value="Current location"
           />
         ) : null}
 

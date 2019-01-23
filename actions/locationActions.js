@@ -3,29 +3,32 @@ import { Location, Permissions } from "expo";
 
 // Get location
 export const getLocation = () => dispatch => {
-  const location = Permissions.askAsync(Permissions.LOCATION);
-  if (location === "granted") {
-    Location.watchPositionAsync({
-      timeout: 5000,
-      maximumAge: 5000
-    }, position => {
-      dispatch({
-        type: GET_LOCATION,
-        payload: position
-      });
-    }, err => {
+  Permissions.askAsync(Permissions.LOCATION).then(location => {
+    if (location.status === "granted") {
+      Location.getProviderStatusAsync().then(status => {
+        if (status.locationServicesEnabled) {
+          Location.watchPositionAsync({ distanceInterval: 100, timeInterval: 5000 },
+            position => {
+              dispatch({
+                type: GET_LOCATION,
+                payload: position
+              });
+            }
+          )
+        } else {
+          dispatch({
+            type: GET_LOCATION_ERROR,
+            payload: "Location services not enabled"
+          });
+        }
+      })
+    } else {
       dispatch({
         type: GET_LOCATION_ERROR,
-        payload: err
+        payload: "No permission granted"
       });
-    })
-
-  } else {
-    dispatch({
-      type: GET_LOCATION_ERROR,
-      payload: "No permission granted"
-    });
-  }
+    }
+  });
 }
 
 export const removeLocation = () => dispatch => {
