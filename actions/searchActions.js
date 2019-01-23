@@ -9,8 +9,9 @@ import {
 import { Location, Permissions } from "expo";
 import { store } from "./../store";
 
+
 // Get search results
-export const getSearchResults = (term) => dispatch => {
+export const getSearchResults = (term, options) => dispatch => {
   dispatch({
     type: SEARCHING,
     payload: true

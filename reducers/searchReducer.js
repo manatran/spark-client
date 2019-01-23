@@ -10,6 +10,7 @@ import {
 const initialState = {
   results: null,
   history: [],
+  input: null,
   searching: false,
 };
 
