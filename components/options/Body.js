@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
 import { updateOptions, updatePreferences } from "../../actions/optionActions";
 import Icon from "./../Icon";
 
@@ -25,25 +26,39 @@ class OptionsBody extends React.Component {
         }
       ],
       forecast: true,
-      quick: true
+      quick: true,
+      items: [
+        {
+          label: "Cheap",
+          value: "price"
+        },
+        {
+          label: "Close",
+          value: "distance"
+        }
+      ]
     };
 
     this.onChange = this.onChange.bind(this);
   }
 
-  onPrefChange(name, pref) {
-    let preferences = Object.assign({}, this.props.displayPreferences);
-
-    preferences[name] = pref;
-    this.props.updatePreferences(preferences);
-  }
-
   onChange(name, value) {
-    let optionsObj = Object.assign({}, this.state.options);
+    switch (name) {
+      case "preference":
+      case "center":
+      case "distance":
+        let options = { ...this.state.options };
 
-    optionsObj[name] = value;
-    this.setState({ options: optionsObj });
-    this.props.updateOptions(optionsObj, this.props.input);
+        options[name] = value;
+        this.setState({ options });
+        return this.props.updateOptions(this.state.options, this.props.input);
+      case "quick":
+      case "forecast":
+        let preferences = { ...this.props.displayPreferences };
+
+        preferences[name] = value;
+        return this.props.updatePreferences(preferences);
+    }
   }
 
   render() {
@@ -59,17 +74,16 @@ class OptionsBody extends React.Component {
           <Text style={styles.subtitle}>Search</Text>
           <View style={styles.toggleContainer}>
             <Text style={styles.text}>Parking preference</Text>
-            <Picker
-              selectedValue={this.state.options.preference}
-              style={{ height: 50, width: 110 }}
-              name="preference"
+            <RNPickerSelect
+              placeholder={{}}
+              items={this.state.items}
               onValueChange={value => {
                 this.onChange("preference", value);
               }}
-            >
-              <Picker.Item label="Cheap" value="cheap" />
-              <Picker.Item label="Close" value="close" />
-            </Picker>
+              value={this.state.options.preference}
+              hideIcon={false}
+              style={pickerSelectStyles}
+            />
           </View>
           <View style={styles.toggleContainer}>
             <View>
@@ -130,7 +144,7 @@ class OptionsBody extends React.Component {
             <Switch
               value={this.props.displayPreferences.forecast}
               onValueChange={value => {
-                this.onPrefChange("forecast", value);
+                this.onChange("forecast", value);
               }}
             />
           </View>
@@ -139,7 +153,7 @@ class OptionsBody extends React.Component {
             <Switch
               value={this.props.displayPreferences.quick}
               onValueChange={value => {
-                this.onPrefChange("quick", value);
+                this.onChange("quick", value);
               }}
             />
           </View>
@@ -197,6 +211,17 @@ const styles = StyleSheet.create({
     color: "#737373"
   }
 });
+
+const pickerSelectStyles = {
+  icon: {
+    borderTopWidth: 4,
+    borderBottomWidth: 0,
+    borderLeftWidth: 4,
+    borderRightWidth: 4,
+    position: "absolute",
+    top: 8
+  }
+};
 
 const mapStateToProps = state => ({
   input: state.search.input,
