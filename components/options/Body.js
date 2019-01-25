@@ -66,7 +66,7 @@ class OptionsBody extends React.Component {
       <ScrollView
         contentContainerStyle={styles.body}
         automaticallyAdjustContentInsets={false}
-        contentInset={{ top: 0, bottom: 100 }}
+        contentInset={{ top: 0, bottom: 120 }}
         showsVerticalScrollIndicator={false}
       >
         {/* Search Card */}
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 4
+    paddingVertical: 10
   },
   text: {
     color: "#737373"
