@@ -2805,6 +2805,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+
 lodash.map@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
@@ -3762,6 +3766,12 @@ react-native-gesture-handler@1.0.9:
 react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
+
+react-native-picker-select@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-5.2.2.tgz#0ed5f57cec40e15528f98cadc4afc513260944cc"
+  dependencies:
+    lodash.isequal "^4.5.0"
 
 react-native-reanimated@1.0.0-alpha.10:
   version "1.0.0-alpha.10"
