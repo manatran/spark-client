@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 14,
     color: "#737373"
-  },
+  }
 });
 
 const pickerSelectStyles = {
@@ -219,7 +219,7 @@ const pickerSelectStyles = {
     borderLeftWidth: 4,
     borderRightWidth: 4,
     position: "absolute",
-    top: 8
+    top: 10
   },
   inputAndroid: {
     width: 150
