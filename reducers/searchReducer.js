@@ -4,7 +4,8 @@ import {
   SEARCHING,
   UPDATE_SEARCH_HISTORY,
   CLEAR_HISTORY,
-  SEARCH_INPUT
+  SEARCH_INPUT,
+  IS_FOCUSED
 } from "../constants";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   history: [],
   input: null,
   searching: false,
+  focus: false
 };
 
 export default function (state = initialState, action) {
@@ -55,6 +57,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         history: []
+      }
+
+    case IS_FOCUSED:
+      return {
+        ...state,
+        focus: action.payload
       }
 
     default:

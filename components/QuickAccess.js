@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import SuggestionCard from "./SuggestionCard";
 import data from "./../data";
 
@@ -10,6 +10,7 @@ class QuickAccess extends React.Component {
       return (
         <View style={styles.container}>
           <View style={styles.card}>
+            {this.props.focus ? <Text style={styles.title}>Custom Locations</Text> : null}
             {this.props.location ? (
               <SuggestionCard icon="gps_fixed" title="Current location" value="Current location" button roundTop />
             ) : null}
@@ -43,7 +44,8 @@ class QuickAccess extends React.Component {
 const mapStateToProps = state => ({
   location: state.location.location,
   results: state.search.results,
-  preferences: state.option.displayPreferences
+  preferences: state.option.displayPreferences,
+  focus: state.search.focus
 });
 
 export default connect(mapStateToProps)(QuickAccess);
@@ -52,6 +54,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 8,
     marginTop: 16
+  },
+  title: {
+    fontSize: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 10
   },
   card: {
     backgroundColor: "white",

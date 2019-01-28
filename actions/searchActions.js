@@ -4,10 +4,16 @@ import {
   SEARCHING,
   UPDATE_SEARCH_HISTORY,
   CLEAR_HISTORY,
-  SEARCH_INPUT
+  SEARCH_INPUT,
+  IS_FOCUSED
 } from '../constants';
-import { Location, Permissions } from "expo";
-import { store } from "./../store";
+import {
+  Location,
+  Permissions
+} from "expo";
+import {
+  store
+} from "./../store";
 
 
 // Get search results
@@ -104,5 +110,12 @@ export const clearHistory = () => dispatch => {
   dispatch({
     type: CLEAR_HISTORY,
     payload: null
+  })
+}
+
+export const setFocus = (focus) => dispatch => {
+  dispatch({
+    type: IS_FOCUSED,
+    payload: focus
   })
 }

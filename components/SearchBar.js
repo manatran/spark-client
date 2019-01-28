@@ -1,7 +1,13 @@
 import React from "react";
 import { StyleSheet, View, TextInput, TouchableOpacity, Keyboard, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
-import { getSearchResults, removeSearchResults, updateSearchHistory, setSearchInput } from "./../actions/searchActions";
+import {
+  getSearchResults,
+  removeSearchResults,
+  updateSearchHistory,
+  setSearchInput,
+  setFocus
+} from "./../actions/searchActions";
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
 
@@ -14,8 +20,9 @@ class SearchBar extends React.Component {
   }
 
   componentDidMount() {
+    this.onBlur();
     this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () => {
-      if (this.state.focus) {
+      if (this.props.focus) {
         this.refs.search.blur();
       }
     });
@@ -40,11 +47,11 @@ class SearchBar extends React.Component {
   }
 
   onFocus() {
-    this.setState({ focus: true });
+    this.props.setFocus(true);
   }
 
   onBlur() {
-    this.setState({ focus: false });
+    this.props.setFocus(false);
   }
 
   componentDidUpdate() {
@@ -61,11 +68,11 @@ class SearchBar extends React.Component {
             // Loader
             <ActivityIndicator style={styles.icon} size="small" color="#61D0E1" />
           ) : (
-              // Search Icon
-              <TouchableOpacity onPress={this.search.bind(this)}>
-                <Icon icon="search" style={styles.icon} />
-              </TouchableOpacity>
-            )}
+            // Search Icon
+            <TouchableOpacity onPress={this.search.bind(this)}>
+              <Icon icon="search" style={styles.icon} />
+            </TouchableOpacity>
+          )}
 
           {/* Search Input */}
           <TextInput
@@ -86,9 +93,6 @@ class SearchBar extends React.Component {
             </TouchableOpacity>
           ) : null}
         </View>
-
-        {/* Suggestions */}
-        {this.state.focus ? <Suggestions /> : null}
       </View>
     );
   }
@@ -99,12 +103,13 @@ const mapStateToProps = state => ({
   input: state.search.input,
   history: state.search.history,
   searching: state.search.searching,
-  options: state.option.options
+  options: state.option.options,
+  focus: state.search.focus
 });
 
 export default connect(
   mapStateToProps,
-  { getSearchResults, removeSearchResults, setSearchInput, updateSearchHistory }
+  { getSearchResults, removeSearchResults, setSearchInput, updateSearchHistory, setFocus }
 )(SearchBar);
 
 const styles = StyleSheet.create({

@@ -9,9 +9,9 @@ import Forecast from "./components/Forecast";
 import QuickAccess from "./components/QuickAccess";
 import Options from "./components/Options";
 import Results from "./components/Results";
+import SearchPage from "./components/SearchPage";
 
 export default class App extends React.Component {
-  
   render() {
     return (
       <Provider store={store}>
@@ -22,6 +22,7 @@ export default class App extends React.Component {
             <SearchBar />
             <Forecast />
             <QuickAccess />
+            <SearchPage />
           </View>
 
           <Results />

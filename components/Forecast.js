@@ -28,7 +28,9 @@ class Forecast extends React.Component {
     let url = `http://api.openweathermap.org/data/2.5/weather?q=Ghent,BE&appid=${key}`;
 
     if (position) {
-      url = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${key}`;
+      url = `http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${
+        position.coords.longitude
+      }&appid=${key}`;
     }
 
     fetch(url)
@@ -58,7 +60,7 @@ class Forecast extends React.Component {
   }
 
   render() {
-    if (!this.props.results && this.props.preferences.forecast) {
+    if (!this.props.results && this.props.preferences.forecast && !this.props.focus) {
       return (
         <View style={styles.container}>
           {this.state.temperature ? (
@@ -95,7 +97,8 @@ class Forecast extends React.Component {
 const mapStateToProps = state => ({
   location: state.location.location,
   results: state.search.results,
-  preferences: state.option.displayPreferences
+  preferences: state.option.displayPreferences,
+  focus: state.search.focus
 });
 
 export default connect(

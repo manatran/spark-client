@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Location, MapView } from "expo";
 
 class Map extends React.Component {
@@ -21,30 +21,30 @@ class Map extends React.Component {
 
   getLatLongFromString(address) {
     if (address !== "Current location") {
-      Location.geocodeAsync(address).then(loc => {
-        loc = loc[0];
-        if (loc) {
-          const location = {
-            latitude: loc.latitude,
-            longitude: loc.longitude
-          };
+      Location.geocodeAsync(address)
+        .then(loc => {
+          loc = loc[0];
+          if (loc) {
+            const location = {
+              latitude: loc.latitude,
+              longitude: loc.longitude
+            };
 
-          if (this.props.results) {
-            this.setState({ searchLoc: location });
-            this.setState({
-              region: {
-                latitude: loc.latitude,
-                longitude: loc.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-              }
-            });
+            if (this.props.results) {
+              this.setState({ searchLoc: location });
+              this.setState({
+                region: {
+                  latitude: loc.latitude,
+                  longitude: loc.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421
+                }
+              });
+            }
           }
-        }
-        this.setState({ receivedProps: false });
-      })
+          this.setState({ receivedProps: false });
+        })
         .catch(err => console.log(err));
-
     } else {
       if (this.props.results) {
         this.setState({ searchLoc: this.props.location.coords });
@@ -78,19 +78,19 @@ class Map extends React.Component {
 
   render() {
     return (
-      <MapView
-        style={styles.map}
-        initialRegion={this.state.initialRegion}
-        region={this.state.region}
-      >
-        {(this.props.input && this.state.searchLoc) ? (
-          <MapView.Marker
-            coordinate={this.state.searchLoc}
-            title={"Search result"}
-            description={this.props.input}
-          />
+      <View style={styles.map}>
+        {!this.props.focus ? (
+          <MapView style={styles.map} initialRegion={this.state.initialRegion} region={this.state.region}>
+            {this.props.input && this.state.searchLoc ? (
+              <MapView.Marker
+                coordinate={this.state.searchLoc}
+                title={"Search result"}
+                description={this.props.input}
+              />
+            ) : null}
+          </MapView>
         ) : null}
-      </MapView>
+      </View>
     );
   }
 }
@@ -98,8 +98,9 @@ class Map extends React.Component {
 const mapStateToProps = state => ({
   location: state.location.location,
   input: state.search.input,
-  results: state.search.results
-})
+  results: state.search.results,
+  focus: state.search.focus
+});
 
 export default connect(mapStateToProps)(Map);
 
