@@ -122,17 +122,19 @@ class OptionsBody extends React.Component {
           <Text style={styles.subtitle}>Custom locations</Text>
           <View style={styles.customContainer}>
             <Icon icon="home" style={styles.icon} />
-            <View>
+            <View style={{ flex: 1 }}>
               <Text style={styles.locationTitle}>Home</Text>
               <Text style={styles.text}>Oude Bruggestraat 33, 8750 Wingene</Text>
             </View>
+            <Icon icon="more_vert" style={styles.vert} />
           </View>
           <View style={styles.customContainer}>
             <Icon icon="work" style={styles.icon} />
-            <View>
+            <View style={{ flex: 1 }}>
               <Text style={styles.locationTitle}>Work</Text>
               <Text style={styles.text}>Industrieweg 232, 9300 Mariakerke</Text>
             </View>
+            <Icon icon="more_vert" style={styles.vert} />
           </View>
         </View>
 
@@ -209,6 +211,9 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 14,
     color: "#737373"
+  },
+  vert: {
+    fontSize: 20
   }
 });
 
