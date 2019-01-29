@@ -6,7 +6,8 @@ import {
   removeSearchResults,
   updateSearchHistory,
   setSearchInput,
-  setFocus
+  setFocus,
+  getAutoComplete
 } from "./../actions/searchActions";
 import Suggestions from "./Suggestions";
 import Icon from "./Icon";
@@ -15,12 +16,14 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      focus: false
+      focus: false,
+      input: ""
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.onBlur();
     this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () => {
       if (this.props.focus) {
         this.refs.search.blur();
@@ -54,6 +57,12 @@ class SearchBar extends React.Component {
     this.props.setFocus(false);
   }
 
+  handleChange(text) {
+    this.props.setSearchInput(text);
+    this.props.getAutoComplete(text);
+    console.log(this.props.places);
+  }
+
   componentDidUpdate() {
     if (this.props.searching) {
       this.refs.search.blur();
@@ -80,7 +89,7 @@ class SearchBar extends React.Component {
             style={styles.input}
             placeholder="Search here..."
             value={this.props.input}
-            onChangeText={text => this.props.setSearchInput(text)}
+            onChangeText={text => this.handleChange(text)}
             onSubmitEditing={this.search.bind(this)}
             onFocus={this.onFocus.bind(this)}
             onBlur={this.onBlur.bind(this)}
@@ -104,12 +113,13 @@ const mapStateToProps = state => ({
   history: state.search.history,
   searching: state.search.searching,
   options: state.option.options,
-  focus: state.search.focus
+  focus: state.search.focus,
+  places: state.search.places
 });
 
 export default connect(
   mapStateToProps,
-  { getSearchResults, removeSearchResults, setSearchInput, updateSearchHistory, setFocus }
+  { getSearchResults, removeSearchResults, setSearchInput, updateSearchHistory, setFocus, getAutoComplete }
 )(SearchBar);
 
 const styles = StyleSheet.create({

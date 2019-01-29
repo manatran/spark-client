@@ -9,7 +9,7 @@ class SearchPage extends Component {
   }
 
   render() {
-    if (this.props.focus) {
+    if (!this.props.focus) {
       return (
         <View>
           <Suggestions />

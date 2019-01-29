@@ -5,8 +5,9 @@ import {
   UPDATE_SEARCH_HISTORY,
   CLEAR_HISTORY,
   SEARCH_INPUT,
-  IS_FOCUSED
-} from '../constants';
+  IS_FOCUSED,
+  GET_PLACES
+} from "../constants";
 import {
   Location,
   Permissions
@@ -15,77 +16,94 @@ import {
   store
 } from "./../store";
 
-
 // Get search results
 export const getSearchResults = (term, options) => dispatch => {
-  dispatch({
-    type: SEARCHING,
-    payload: true
-  });
-  console.log(options)
-  Permissions.askAsync(Permissions.LOCATION).then(location => {
-    if (location.status === "granted") {
-      if (term === "Current location") {
-        const lat = store.getState().location.location.coords.latitude;
-        const long = store.getState().location.location.coords.longitude;
-        fetch(`http://10.120.4.6:3000/search?lat=${lat}&lng=${long}&radius=10`)
-          .then(res => res.json())
-          .then(res => {
-            dispatch({
-              type: GET_SEARCH_RESULTS,
-              payload: res
-            });
-            dispatch({
-              type: SEARCHING,
-              payload: false
-            });
-          })
-          .catch(err => {
-            console.log(err);
-            dispatch({
-              type: SEARCHING,
-              payload: false
-            });
+  // dispatch({
+  //   type: SEARCHING,
+  //   payload: true
+  // });
+  // console.log(options);
+  // Permissions.askAsync(Permissions.LOCATION).then(location => {
+  //   if (location.status === "granted") {
+  //     if (term === "Current location") {
+  //       const lat = store.getState().location.location.coords.latitude;
+  //       const long = store.getState().location.location.coords.longitude;
+  //       fetch(`http://10.120.4.6:3000/search?lat=${lat}&lng=${long}&radius=10`)
+  //         .then(res => res.json())
+  //         .then(res => {
+  //           dispatch({
+  //             type: GET_SEARCH_RESULTS,
+  //             payload: res
+  //           });
+  //           dispatch({
+  //             type: SEARCHING,
+  //             payload: false
+  //           });
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //           dispatch({
+  //             type: SEARCHING,
+  //             payload: false
+  //           });
+  //         });
+  //     } else {
+  //       Location.geocodeAsync(term)
+  //         .then(loc => {
+  //           loc = loc[0];
+  //           if (loc) {
+  //             fetch(`http://10.120.4.6:3000/search?lat=${loc.latitude}&lng=${loc.longitude}&radius=10`)
+  //               .then(res => res.json())
+  //               .then(res => {
+  //                 dispatch({
+  //                   type: GET_SEARCH_RESULTS,
+  //                   payload: res
+  //                 });
+  //                 dispatch({
+  //                   type: SEARCHING,
+  //                   payload: false
+  //                 });
+  //               })
+  //               .catch(err => {
+  //                 console.log(err);
+  //                 dispatch({
+  //                   type: SEARCHING,
+  //                   payload: false
+  //                 });
+  //               });
+  //           } else {
+  //             console.log("Address not found");
+  //           }
+  //         })
+  //         .catch(err => console.log(err));
+  //     }
+  //   }
+  // });
+};
 
-          })
-      } else {
-        Location.geocodeAsync(term).then(loc => {
-          loc = loc[0];
-          if (loc) {
-            fetch(`http://10.120.4.6:3000/search?lat=${loc.latitude}&lng=${loc.longitude}&radius=10`)
-              .then(res => res.json())
-              .then(res => {
-                dispatch({
-                  type: GET_SEARCH_RESULTS,
-                  payload: res
-                });
-                dispatch({
-                  type: SEARCHING,
-                  payload: false
-                });
-              })
-              .catch(err => {
-                console.log(err);
-                dispatch({
-                  type: SEARCHING,
-                  payload: false
-                });
-              })
-          } else {
-            console.log("Address not found");
-          }
-        }).catch(err => console.log(err));
-      }
-    }
-  })
-}
+export const getAutoComplete = input => dispatch => {
 
-export const setSearchInput = (term) => dispatch => {
+  fetch(
+      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyC6kAXLVq0TKXNOo1igxuya0ySiz6jiN_8`
+    )
+    .then(res => res)
+    .then(res => {
+      dispatch({
+        type: GET_PLACES,
+        payload: res
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const setSearchInput = term => dispatch => {
   dispatch({
     type: SEARCH_INPUT,
     payload: term
   });
-}
+};
 
 // Remove search results
 export const removeSearchResults = () => dispatch => {
@@ -97,25 +115,25 @@ export const removeSearchResults = () => dispatch => {
     type: SEARCHING,
     payload: false
   });
-}
+};
 
-export const updateSearchHistory = (history) => dispatch => {
+export const updateSearchHistory = history => dispatch => {
   dispatch({
     type: UPDATE_SEARCH_HISTORY,
     payload: history
-  })
-}
+  });
+};
 
 export const clearHistory = () => dispatch => {
   dispatch({
     type: CLEAR_HISTORY,
     payload: null
-  })
-}
+  });
+};
 
-export const setFocus = (focus) => dispatch => {
+export const setFocus = focus => dispatch => {
   dispatch({
     type: IS_FOCUSED,
     payload: focus
-  })
-}
+  });
+};

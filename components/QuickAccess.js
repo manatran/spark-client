@@ -6,7 +6,7 @@ import data from "./../data";
 
 class QuickAccess extends React.Component {
   render() {
-    if (!this.props.results && this.props.preferences.quick) {
+    if (!this.props.results && this.props.preferences.quick && this.props.focus) {
       return (
         <View style={styles.container}>
           <View style={styles.card}>

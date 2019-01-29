@@ -10,6 +10,8 @@ import QuickAccess from "./components/QuickAccess";
 import Options from "./components/Options";
 import Results from "./components/Results";
 import SearchPage from "./components/SearchPage";
+import Autocomplete from "./components/AutoComplete";
+import SearchPlaces from "./components/InstantSearch";
 
 export default class App extends React.Component {
   render() {
@@ -19,7 +21,6 @@ export default class App extends React.Component {
           <StatusBar hidden={true} />
           <Map />
           <View style={{ zIndex: 1 }}>
-            <SearchBar />
             <Forecast />
             <QuickAccess />
             <SearchPage />
