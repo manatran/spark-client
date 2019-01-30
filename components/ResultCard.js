@@ -16,7 +16,6 @@ class ResultCard extends React.Component {
     Permissions.askAsync(Permissions.LOCATION).then(location => {
       if (location.status === "granted") {
         Location.reverseGeocodeAsync(pos).then(address => {
-          console.log(address);
           address = address[0];
           if (address.street && address.city) {
             this.setState({ name: `${address.street} ${address.city}` });

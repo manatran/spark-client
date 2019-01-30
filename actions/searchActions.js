@@ -16,13 +16,13 @@ export const getSearchResults = (term, options) => dispatch => {
     type: SEARCHING,
     payload: true
   });
-  console.log(options)
+  
   Permissions.askAsync(Permissions.LOCATION).then(location => {
     if (location.status === "granted") {
       if (term === "Current location") {
         const lat = store.getState().location.location.coords.latitude;
         const long = store.getState().location.location.coords.longitude;
-        fetch(`http://10.120.4.6:3000/search?lat=${lat}&lng=${long}&radius=10`)
+        fetch(`https://spark-node.herokuapp.com/search?lat=${lat}&lng=${long}&radius=10`)
           .then(res => res.json())
           .then(res => {
             dispatch({
@@ -46,7 +46,7 @@ export const getSearchResults = (term, options) => dispatch => {
         Location.geocodeAsync(term).then(loc => {
           loc = loc[0];
           if (loc) {
-            fetch(`http://10.120.4.6:3000/search?lat=${loc.latitude}&lng=${loc.longitude}&radius=10`)
+            fetch(`https://spark-node.herokuapp.com/search?lat=${loc.latitude}&lng=${loc.longitude}&radius=10`)
               .then(res => res.json())
               .then(res => {
                 dispatch({
