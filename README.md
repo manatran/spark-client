@@ -6,7 +6,7 @@ This project was created for the Web of Things course at Artevelde University Co
 
 ## Screenshots
 
-
+![Screenshots](./assets/screenshots.png)
 
 ## Technologies
 
