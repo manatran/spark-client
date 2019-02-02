@@ -52,8 +52,8 @@ class Map extends React.Component {
           region: {
             latitude: this.props.location.coords.latitude,
             longitude: this.props.location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.002,
+            longitudeDelta: 0.002
           }
         });
       }

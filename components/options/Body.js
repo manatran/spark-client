@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ScrollView, Slider, Switch, Picker } from "reac
 import RNPickerSelect from "react-native-picker-select";
 import { updateOptions, updatePreferences } from "../../actions/optionActions";
 import Icon from "./../Icon";
+import data from "./../../data";
 
 class OptionsBody extends React.Component {
   constructor(props) {
@@ -18,11 +19,11 @@ class OptionsBody extends React.Component {
       locations: [
         {
           title: "Home",
-          location: "Oude Bruggestraat 33, Wingene"
+          location: data[1].subtitle
         },
         {
           title: "Work",
-          location: "Industrieweg 232, Mariakerke"
+          location: data[2].subtitle
         }
       ],
       forecast: true,
@@ -124,14 +125,14 @@ class OptionsBody extends React.Component {
             <Icon icon="home" style={styles.icon} />
             <View>
               <Text style={styles.locationTitle}>Home</Text>
-              <Text style={styles.text}>Oude Bruggestraat 33, 8750 Wingene</Text>
+              <Text style={styles.text}>{this.state.locations[0].location}</Text>
             </View>
           </View>
           <View style={styles.customContainer}>
             <Icon icon="work" style={styles.icon} />
             <View>
               <Text style={styles.locationTitle}>Work</Text>
-              <Text style={styles.text}>Industrieweg 232, 9300 Mariakerke</Text>
+              <Text style={styles.text}>{this.state.locations[1].location}</Text>
             </View>
           </View>
         </View>
