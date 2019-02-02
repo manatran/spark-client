@@ -57,7 +57,7 @@ The server for this project is hosted on Heroku. This is what your fetch URL mig
 
 ## Try it out
 
-We hosted the app on Expo, allowing users to try it out by scanning this QR code with the Expo app. Due to restrictions set by Apple, this will only works on Android devices.
+We hosted the app on Expo, allowing users to try it out by scanning this QR code with the Expo app. Due to restrictions set by Apple, this will only works on Android devices. You can also view the app on [Expo](https://expo.io/@manaus_t/spark) directly.
 
 ![QR code](./assets/qr.png)
 
