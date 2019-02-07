@@ -63,8 +63,19 @@ We hosted the app on Expo, allowing users to try it out by scanning this QR code
 
 ## Contributors
 
+React Native app
+
 * **Manaus Transez** - [GitHub](https://github.com/manatran)
 * **Yens Broothaers** - [GitHub](https://github.com/yensbroo)
+
+Node server
+
+* **Simon Decloedt** - [GitHub](https://github.com/simodecl)
+* **Jordy Van der Haegen** - [GitHub](https://github.com/jordyvanderhaegen)
+
+Computer Vision
+
+* **Jeroen Bernaerts** - [GitHub](https://github.com/gdm-jerobern)
 
 
 ## License
